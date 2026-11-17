@@ -4,17 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
-    "dev:react": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
+    "start": "concurrently -k -p \"[{name}]\" -n \"BACKEND,ANGULAR\" -c \"cyan,yellow\" \"npm run start --prefix backend\" \"npm run start --prefix frontend-angular\"",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"BACKEND,ANGULAR\" -c \"cyan,yellow\" \"npm run start --prefix backend\" \"npm run start --prefix frontend-angular\"",
     "dev:angular": "concurrently -k -p \"[{name}]\" -n \"BACKEND,ANGULAR\" -c \"cyan,yellow\" \"npm run start --prefix backend\" \"npm run start --prefix frontend-angular\"",
-    "dev:all": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT,ANGULAR\" -c \"cyan,magenta,yellow\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\" \"npm run start --prefix frontend-angular\"",
+    "dev:react": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
+    "dev:all": "concurrently -k -p \"[{name}]\" -n \"BACKEND,ANGULAR,REACT\" -c \"cyan,yellow,magenta\" \"npm run start --prefix backend\" \"npm run start --prefix frontend-angular\" \"npm run dev --prefix frontend-react\"",
     "backend": "npm run start --prefix backend",
-    "frontend:react": "npm run dev --prefix frontend-react",
     "frontend:angular": "npm run start --prefix frontend-angular",
-    "build:react": "npm run build --prefix frontend-react",
+    "frontend:react": "npm run dev --prefix frontend-react",
+    "build": "npm run build --prefix frontend-angular",
     "build:angular": "npm run build --prefix frontend-angular",
-    "build:all": "npm run build --prefix frontend-react && npm run build --prefix frontend-angular"
+    "build:react": "npm run build --prefix frontend-react",
+    "build:all": "npm run build --prefix frontend-angular && npm run build --prefix frontend-react"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

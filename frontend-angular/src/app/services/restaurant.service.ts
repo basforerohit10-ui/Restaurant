@@ -1,8 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { Table, Reservation, WaitlistEntry, RestaurantMetrics } from '../models/restaurant.model';
+import { catchError } from 'rxjs/operators';
+import {
+  Table,
+  Reservation,
+  WaitlistEntry,
+  GuestProfile,
+  RestaurantMetrics,
+  ToastNotification
+} from '../models/restaurant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +26,12 @@ export class RestaurantService {
 
   private waitlistSubject = new BehaviorSubject<WaitlistEntry[]>([]);
   public waitlist$ = this.waitlistSubject.asObservable();
+
+  private guestsSubject = new BehaviorSubject<GuestProfile[]>([]);
+  public guests$ = this.guestsSubject.asObservable();
+
+  private toastsSubject = new BehaviorSubject<ToastNotification[]>([]);
+  public toasts$ = this.toastsSubject.asObservable();
 
   private backendOnlineSubject = new BehaviorSubject<boolean>(false);
   public backendOnline$ = this.backendOnlineSubject.asObservable();
@@ -54,6 +67,8 @@ export class RestaurantService {
     this.http.get<{ data: WaitlistEntry[] }>(`${this.apiUrl}/waitlist`).subscribe(res => {
       if (res && res.data) this.waitlistSubject.next(res.data);
     });
+
+    this.loadSeedGuests();
   }
 
   private loadLocalSeeds(): void {
@@ -122,6 +137,65 @@ export class RestaurantService {
     this.tablesSubject.next(seedTables);
     this.reservationsSubject.next(seedReservations);
     this.waitlistSubject.next(seedWaitlist);
+    this.loadSeedGuests();
+  }
+
+  private loadSeedGuests(): void {
+    const seedGuests: GuestProfile[] = [
+      {
+        id: 'GUEST-01',
+        name: 'Eleanor Vance',
+        phone: '+1 (555) 234-8921',
+        email: 'eleanor.vance@auramail.com',
+        vipStatus: true,
+        totalVisits: 14,
+        totalSpent: 2850,
+        preferredSection: 'main',
+        dietaryRestrictions: ['Vegetarian', 'Gluten-Free'],
+        notes: 'Loves corner booth by the window. Preferred sparkling water.',
+        lastVisit: '2026-11-10'
+      },
+      {
+        id: 'GUEST-02',
+        name: 'Marcus Sterling',
+        phone: '+1 (555) 876-1209',
+        email: 'm.sterling@sterlingcap.com',
+        vipStatus: true,
+        totalVisits: 22,
+        totalSpent: 6420,
+        preferredSection: 'vip',
+        dietaryRestrictions: ['Nut Allergy'],
+        notes: 'Corporate entertaining. Always request sommelier service.',
+        lastVisit: '2026-11-04'
+      },
+      {
+        id: 'GUEST-03',
+        name: 'Sophia Loren Chen',
+        phone: '+1 (555) 432-9801',
+        email: 'sophia.chen@arts.org',
+        vipStatus: false,
+        totalVisits: 6,
+        totalSpent: 980,
+        preferredSection: 'patio',
+        dietaryRestrictions: ['Shellfish'],
+        notes: 'Enjoys outdoor sunset dining.',
+        lastVisit: '2026-10-28'
+      },
+      {
+        id: 'GUEST-04',
+        name: 'David & Rachel Ross',
+        phone: '+1 (555) 312-7744',
+        email: 'ross.family@gmail.com',
+        vipStatus: false,
+        totalVisits: 3,
+        totalSpent: 420,
+        preferredSection: 'main',
+        dietaryRestrictions: ['Halal'],
+        notes: 'Family dining with children.',
+        lastVisit: '2026-10-15'
+      }
+    ];
+    this.guestsSubject.next(seedGuests);
   }
 
   // Reactive metrics computation using Array reduce and filter
@@ -158,6 +232,54 @@ export class RestaurantService {
     };
   }
 
+  // Toast System
+  showToast(message: string, type: 'success' | 'info' | 'warning' | 'error' = 'info'): void {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+    const current = this.toastsSubject.value;
+    this.toastsSubject.next([...current, { id, message, type }]);
+
+    this.playAudioFeedback(type);
+
+    setTimeout(() => {
+      this.removeToast(id);
+    }, 4000);
+  }
+
+  removeToast(id: string): void {
+    this.toastsSubject.next(this.toastsSubject.value.filter(t => t.id !== id));
+  }
+
+  // Audio Synthesizer Chime
+  private playAudioFeedback(type: string): void {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      const now = ctx.currentTime;
+      if (type === 'success') {
+        osc.frequency.setValueAtTime(587.33, now); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+      } else {
+        osc.frequency.setValueAtTime(440, now); // A4
+        osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.12); // E5
+      }
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } catch {
+      // AudioContext muted/blocked by browser gesture policy, ignore silently
+    }
+  }
+
   // Actions
   addReservation(data: Omit<Reservation, 'id'>): void {
     const newId = `RES-${String(Date.now()).slice(-4)}`;
@@ -170,6 +292,8 @@ export class RestaurantService {
       this.updateTableStatus(newRes.tableId, newRes.status === 'seated' ? 'occupied' : 'reserved', newId);
     }
 
+    this.showToast(`Booking ${newId} confirmed for ${newRes.guestName}!`, 'success');
+
     if (this.backendOnlineSubject.value) {
       this.http.post(`${this.apiUrl}/reservations`, newRes).subscribe();
     }
@@ -181,6 +305,9 @@ export class RestaurantService {
     );
     this.reservationsSubject.next(reservations);
     this.updateTableStatus(tableId, 'occupied', id);
+
+    const target = reservations.find(r => r.id === id);
+    this.showToast(`Seated ${target?.guestName || 'Guest'} at Table ${tableId}`, 'success');
 
     if (this.backendOnlineSubject.value) {
       this.http.put(`${this.apiUrl}/reservations/${id}/seat`, { tableId }).subscribe();
@@ -200,6 +327,8 @@ export class RestaurantService {
       this.updateTableStatus(target.tableId, 'available', null);
     }
 
+    this.showToast(`Meal completed for ${target.guestName}. Table ${target.tableId} is now free!`, 'info');
+
     if (this.backendOnlineSubject.value) {
       this.http.put(`${this.apiUrl}/reservations/${id}/complete`, {}).subscribe();
     }
@@ -218,62 +347,125 @@ export class RestaurantService {
       this.updateTableStatus(target.tableId, 'available', null);
     }
 
+    this.showToast(`Reservation ${id} cancelled.`, 'warning');
+
     if (this.backendOnlineSubject.value) {
-      this.http.delete(`${this.apiUrl}/reservations/${id}`).subscribe();
+      this.http.put(`${this.apiUrl}/reservations/${id}/cancel`, {}).subscribe();
     }
   }
 
-  updateTableStatus(tableId: string, status: Table['status'], resId: string | null = null): void {
+  updateTableStatus(
+    tableId: string,
+    status: 'available' | 'occupied' | 'reserved' | 'maintenance',
+    reservationId?: string | null
+  ): void {
     const tables = this.tablesSubject.value.map(t =>
-      t.id === tableId ? { ...t, status, currentReservationId: resId } : t
+      t.id === tableId || t.number === tableId
+        ? {
+            ...t,
+            status,
+            currentReservationId: status === 'available' ? null : (reservationId !== undefined ? reservationId : t.currentReservationId)
+          }
+        : t
     );
     this.tablesSubject.next(tables);
 
     if (this.backendOnlineSubject.value) {
-      this.http.put(`${this.apiUrl}/tables/${tableId}/status`, { status, currentReservationId: resId }).subscribe();
+      this.http.patch(`${this.apiUrl}/tables/${tableId}/status`, { status, reservationId }).subscribe();
     }
   }
 
-  addToWaitlist(data: Omit<WaitlistEntry, 'id' | 'addedAt' | 'status'>): void {
+  addWaitlist(entry: Omit<WaitlistEntry, 'id' | 'status' | 'addedAt'>): void {
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const newId = `WAIT-${String(Date.now()).slice(-4)}`;
     const newEntry: WaitlistEntry = {
-      ...data,
-      id: `WAIT-${String(Date.now()).slice(-3)}`,
-      addedAt: timeStr,
-      status: 'waiting'
+      ...entry,
+      id: newId,
+      status: 'waiting',
+      addedAt: timeStr
     };
 
     this.waitlistSubject.next([...this.waitlistSubject.value, newEntry]);
+    this.showToast(`Added ${newEntry.guestName} to waitlist (#${this.waitlistSubject.value.length})`, 'info');
 
     if (this.backendOnlineSubject.value) {
       this.http.post(`${this.apiUrl}/waitlist`, newEntry).subscribe();
     }
   }
 
-  seatWaitlistGuest(waitlistId: string, tableId: string): void {
-    const entry = this.waitlistSubject.value.find(w => w.id === waitlistId);
-    if (!entry) return;
+  seatWaitlist(id: string): void {
+    const target = this.waitlistSubject.value.find(w => w.id === id);
+    if (!target) return;
 
-    this.waitlistSubject.next(this.waitlistSubject.value.filter(w => w.id !== waitlistId));
+    // Find first available table that accommodates party
+    const openTable = this.tablesSubject.value.find(
+      t => t.status === 'available' && t.capacity >= target.partySize
+    );
 
-    this.addReservation({
-      guestName: entry.guestName,
-      phone: entry.phone,
-      partySize: entry.partySize,
-      tableId,
-      date: new Date().toISOString().split('T')[0],
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      status: 'seated',
-      occasion: 'Walk-In Dining',
-      specialRequests: entry.notes
-    });
+    if (openTable) {
+      this.updateTableStatus(openTable.id, 'occupied', `WL-${target.id}`);
+      this.waitlistSubject.next(this.waitlistSubject.value.filter(w => w.id !== id));
+      this.showToast(`Walk-in seated: ${target.guestName} at Table ${openTable.number}`, 'success');
+
+      if (this.backendOnlineSubject.value) {
+        this.http.put(`${this.apiUrl}/waitlist/${id}/seat`, { tableId: openTable.id }).subscribe();
+      }
+    } else {
+      this.showToast(`No available table with capacity >= ${target.partySize} at the moment.`, 'warning');
+    }
+  }
+
+  // CSV Run Sheet Exporter
+  exportReservationsCSV(): void {
+    const list = this.reservationsSubject.value;
+    const headers = ['Reservation ID', 'Guest Name', 'Phone', 'Date', 'Time', 'Party Size', 'Table', 'Status', 'Occasion', 'Special Requests'];
+    const rows = list.map(r => [
+      r.id,
+      `"${r.guestName.replace(/"/g, '""')}"`,
+      `"${r.phone || ''}"`,
+      r.date,
+      r.time,
+      r.partySize,
+      r.tableId || 'Unassigned',
+      r.status,
+      `"${r.occasion || 'General'}"`,
+      `"${(r.specialRequests || '').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `aurabistro_reservations_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    this.showToast('Reservation Run Sheet downloaded as CSV!', 'success');
+  }
+
+  resetDemo(): void {
+    if (this.backendOnlineSubject.value) {
+      this.http.post(`${this.apiUrl}/reset`, {}).subscribe(() => {
+        this.loadFromBackend();
+        this.showToast('System data reset to initial demo seeds', 'info');
+      });
+    } else {
+      this.loadLocalSeeds();
+      this.showToast('Local demo seeds reloaded', 'info');
+    }
   }
 
   resetData(): void {
-    this.loadLocalSeeds();
-    if (this.backendOnlineSubject.value) {
-      this.http.post(`${this.apiUrl}/reset`, {}).subscribe(() => this.loadFromBackend());
-    }
+    this.resetDemo();
+  }
+
+  addToWaitlist(entry: Omit<WaitlistEntry, 'id' | 'status' | 'addedAt'>): void {
+    this.addWaitlist(entry);
+  }
+
+  seatWaitlistGuest(id: string, tableId?: string): void {
+    this.seatWaitlist(id);
   }
 }

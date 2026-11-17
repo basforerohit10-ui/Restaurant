@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
           <span>📊 Dashboard</span>
         </a>
         <a routerLink="/tables" routerLinkActive="active" class="nav-item">
-          <span>🪑 Table Layout</span>
+          <span>🪑 Table Floor Plan</span>
         </a>
         <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
           <span>📅 Reservations</span>
@@ -22,8 +22,11 @@ import { RouterModule } from '@angular/router';
         <a routerLink="/waitlist" routerLinkActive="active" class="nav-item">
           <span>⏳ Walk-In Waitlist</span>
         </a>
+        <a routerLink="/guests" routerLinkActive="active" class="nav-item">
+          <span>👥 Guest CRM &amp; VIPs</span>
+        </a>
         <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
-          <span>📈 Floor Analytics</span>
+          <span>📈 Floor Analytics &amp; TS</span>
         </a>
       </nav>
 

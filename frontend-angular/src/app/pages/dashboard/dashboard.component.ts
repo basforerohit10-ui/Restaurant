@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
+import { RestaurantMetrics } from '../../models/restaurant.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -185,7 +186,10 @@ import { RestaurantService } from '../../services/restaurant.service';
 })
 export class DashboardComponent {
   private restaurantService = inject(RestaurantService);
-  metrics = this.restaurantService.getMetrics();
   reservations$ = this.restaurantService.reservations$;
   tables$ = this.restaurantService.tables$;
+
+  get metrics(): RestaurantMetrics {
+    return this.restaurantService.getMetrics();
+  }
 }

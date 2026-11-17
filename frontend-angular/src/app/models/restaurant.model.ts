@@ -38,6 +38,20 @@ export interface WaitlistEntry {
   notes?: string;
 }
 
+export interface GuestProfile {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  vipStatus: boolean;
+  totalVisits: number;
+  totalSpent: number;
+  preferredSection: string;
+  dietaryRestrictions: string[];
+  notes?: string;
+  lastVisit: string;
+}
+
 export interface RestaurantMetrics {
   totalTables: number;
   availableTables: number;
@@ -50,4 +64,10 @@ export interface RestaurantMetrics {
   totalSeatedGuests: number;
   totalExpectedGuests: number;
   activeWaitlistCount: number;
+}
+
+export interface ToastNotification {
+  id: string;
+  type: 'success' | 'info' | 'warning' | 'error';
+  message: string;
 }

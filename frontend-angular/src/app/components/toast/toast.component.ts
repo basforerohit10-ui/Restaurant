@@ -107,3 +107,4 @@ export class ToastComponent {
     this.restaurantService.removeToast(id);
   }
 }
+

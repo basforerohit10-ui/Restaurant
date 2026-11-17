@@ -1,0 +1,522 @@
+{
+  "sections": [
+    {
+      "id": "all",
+      "name": "All Areas"
+    },
+    {
+      "id": "main",
+      "name": "Main Dining Hall"
+    },
+    {
+      "id": "patio",
+      "name": "Garden Patio"
+    },
+    {
+      "id": "rooftop",
+      "name": "Rooftop Terrace"
+    },
+    {
+      "id": "vip",
+      "name": "VIP Lounge"
+    },
+    {
+      "id": "bar",
+      "name": "Bar & High Tops"
+    }
+  ],
+  "tables": [
+    {
+      "id": "T-101",
+      "number": "101",
+      "section": "main",
+      "capacity": 2,
+      "shape": "round",
+      "status": "occupied",
+      "currentReservationId": "RES-001",
+      "x": 15,
+      "y": 20
+    },
+    {
+      "id": "T-102",
+      "number": "102",
+      "section": "main",
+      "capacity": 2,
+      "shape": "round",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 30,
+      "y": 20
+    },
+    {
+      "id": "T-103",
+      "number": "103",
+      "section": "main",
+      "capacity": 4,
+      "shape": "square",
+      "status": "reserved",
+      "currentReservationId": "RES-002",
+      "x": 48,
+      "y": 20
+    },
+    {
+      "id": "T-104",
+      "number": "104",
+      "section": "main",
+      "capacity": 4,
+      "shape": "square",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 65,
+      "y": 20
+    },
+    {
+      "id": "T-105",
+      "number": "105",
+      "section": "main",
+      "capacity": 6,
+      "shape": "rectangle",
+      "status": "occupied",
+      "currentReservationId": "RES-003",
+      "x": 18,
+      "y": 55
+    },
+    {
+      "id": "T-106",
+      "number": "106",
+      "section": "main",
+      "capacity": 6,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 42,
+      "y": 55
+    },
+    {
+      "id": "T-107",
+      "number": "107",
+      "section": "main",
+      "capacity": 8,
+      "shape": "rectangle",
+      "status": "reserved",
+      "currentReservationId": "RES-004",
+      "x": 70,
+      "y": 55
+    },
+    {
+      "id": "T-108",
+      "number": "108",
+      "section": "main",
+      "capacity": 4,
+      "shape": "square",
+      "status": "maintenance",
+      "currentReservationId": null,
+      "x": 88,
+      "y": 55
+    },
+    {
+      "id": "T-201",
+      "number": "201",
+      "section": "patio",
+      "capacity": 2,
+      "shape": "round",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 15,
+      "y": 25
+    },
+    {
+      "id": "T-202",
+      "number": "202",
+      "section": "patio",
+      "capacity": 2,
+      "shape": "round",
+      "status": "occupied",
+      "currentReservationId": "RES-005",
+      "x": 35,
+      "y": 25
+    },
+    {
+      "id": "T-203",
+      "number": "203",
+      "section": "patio",
+      "capacity": 4,
+      "shape": "square",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 55,
+      "y": 25
+    },
+    {
+      "id": "T-204",
+      "number": "204",
+      "section": "patio",
+      "capacity": 4,
+      "shape": "square",
+      "status": "reserved",
+      "currentReservationId": "RES-006",
+      "x": 75,
+      "y": 25
+    },
+    {
+      "id": "T-205",
+      "number": "205",
+      "section": "patio",
+      "capacity": 6,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 30,
+      "y": 65
+    },
+    {
+      "id": "T-206",
+      "number": "206",
+      "section": "patio",
+      "capacity": 6,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 65,
+      "y": 65
+    },
+    {
+      "id": "T-301",
+      "number": "301",
+      "section": "rooftop",
+      "capacity": 2,
+      "shape": "round",
+      "status": "reserved",
+      "currentReservationId": "RES-007",
+      "x": 20,
+      "y": 35
+    },
+    {
+      "id": "T-302",
+      "number": "302",
+      "section": "rooftop",
+      "capacity": 4,
+      "shape": "square",
+      "status": "occupied",
+      "currentReservationId": "RES-008",
+      "x": 45,
+      "y": 35
+    },
+    {
+      "id": "T-303",
+      "number": "303",
+      "section": "rooftop",
+      "capacity": 4,
+      "shape": "square",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 70,
+      "y": 35
+    },
+    {
+      "id": "T-304",
+      "number": "304",
+      "section": "rooftop",
+      "capacity": 8,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 45,
+      "y": 70
+    },
+    {
+      "id": "T-401",
+      "number": "401",
+      "section": "vip",
+      "capacity": 6,
+      "shape": "round",
+      "status": "reserved",
+      "currentReservationId": "RES-009",
+      "x": 25,
+      "y": 45
+    },
+    {
+      "id": "T-402",
+      "number": "402",
+      "section": "vip",
+      "capacity": 8,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 55,
+      "y": 45
+    },
+    {
+      "id": "T-403",
+      "number": "403",
+      "section": "vip",
+      "capacity": 10,
+      "shape": "rectangle",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 80,
+      "y": 45
+    },
+    {
+      "id": "T-501",
+      "number": "501",
+      "section": "bar",
+      "capacity": 2,
+      "shape": "round",
+      "status": "occupied",
+      "currentReservationId": "RES-010",
+      "x": 20,
+      "y": 50
+    },
+    {
+      "id": "T-502",
+      "number": "502",
+      "section": "bar",
+      "capacity": 2,
+      "shape": "round",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 40,
+      "y": 50
+    },
+    {
+      "id": "T-503",
+      "number": "503",
+      "section": "bar",
+      "capacity": 4,
+      "shape": "square",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 60,
+      "y": 50
+    },
+    {
+      "id": "T-504",
+      "number": "504",
+      "section": "bar",
+      "capacity": 4,
+      "shape": "square",
+      "status": "available",
+      "currentReservationId": null,
+      "x": 80,
+      "y": 50
+    }
+  ],
+  "reservations": [
+    {
+      "id": "RES-001",
+      "guestName": "Eleanor Vance",
+      "phone": "+1 (555) 234-8921",
+      "email": "eleanor.vance@example.com",
+      "partySize": 2,
+      "tableId": "T-101",
+      "date": "2026-11-10",
+      "time": "18:30",
+      "status": "seated",
+      "occasion": "Anniversary",
+      "specialRequests": "Window seat preferred, celebrating 5th wedding anniversary.",
+      "source": "Website",
+      "createdAt": "2026-11-10T10:15:00Z"
+    },
+    {
+      "id": "RES-002",
+      "guestName": "Marcus Sterling",
+      "phone": "+1 (555) 876-1209",
+      "email": "m.sterling@investments.com",
+      "partySize": 4,
+      "tableId": "T-103",
+      "date": "2026-11-10",
+      "time": "19:00",
+      "status": "confirmed",
+      "occasion": "Business",
+      "specialRequests": "Quiet area for client dinner discussion. Sparkling water on arrival.",
+      "source": "OpenTable",
+      "createdAt": "2026-11-10T09:00:00Z"
+    },
+    {
+      "id": "RES-003",
+      "guestName": "Sophia Loren Chen",
+      "phone": "+1 (555) 432-9801",
+      "email": "sophia.chen@studio.design",
+      "partySize": 6,
+      "tableId": "T-105",
+      "date": "2026-11-10",
+      "time": "18:00",
+      "status": "seated",
+      "occasion": "Birthday",
+      "specialRequests": "Gluten allergy for 1 guest. Will bring their own birthday cake.",
+      "source": "Phone",
+      "createdAt": "2026-11-09T16:20:00Z"
+    },
+    {
+      "id": "RES-004",
+      "guestName": "Dr. Arthur Pendelton",
+      "phone": "+1 (555) 345-6712",
+      "email": "arthur.p@university.edu",
+      "partySize": 8,
+      "tableId": "T-107",
+      "date": "2026-11-10",
+      "time": "20:00",
+      "status": "confirmed",
+      "occasion": "Celebration",
+      "specialRequests": "Department milestone celebration. Sommelier pairing recommendation.",
+      "source": "Website",
+      "createdAt": "2026-11-08T11:45:00Z"
+    },
+    {
+      "id": "RES-005",
+      "guestName": "Liam & Chloe Martinez",
+      "phone": "+1 (555) 912-3847",
+      "email": "chloe.m@creatives.co",
+      "partySize": 2,
+      "tableId": "T-202",
+      "date": "2026-11-10",
+      "time": "18:15",
+      "status": "seated",
+      "occasion": "Date Night",
+      "specialRequests": "Romantic candle lighting, patio heater turned on.",
+      "source": "Resy",
+      "createdAt": "2026-11-10T12:00:00Z"
+    },
+    {
+      "id": "RES-006",
+      "guestName": "Harrison Ford Green",
+      "phone": "+1 (555) 678-2341",
+      "email": "hgreen@ventures.io",
+      "partySize": 4,
+      "tableId": "T-204",
+      "date": "2026-11-10",
+      "time": "19:30",
+      "status": "confirmed",
+      "occasion": "Casual Dining",
+      "specialRequests": "High chair needed for a toddler.",
+      "source": "Website",
+      "createdAt": "2026-11-10T13:30:00Z"
+    },
+    {
+      "id": "RES-007",
+      "guestName": "Genevieve Dupond",
+      "phone": "+1 (555) 543-1289",
+      "email": "genevieve.d@fashionweek.fr",
+      "partySize": 2,
+      "tableId": "T-301",
+      "date": "2026-11-10",
+      "time": "20:15",
+      "status": "confirmed",
+      "occasion": "Date Night",
+      "specialRequests": "Rooftop skyline view is requested.",
+      "source": "Concierge",
+      "createdAt": "2026-11-09T14:10:00Z"
+    },
+    {
+      "id": "RES-008",
+      "guestName": "Alexander Hayes",
+      "phone": "+1 (555) 789-0123",
+      "email": "ahayes@globalcorp.net",
+      "partySize": 4,
+      "tableId": "T-302",
+      "date": "2026-11-10",
+      "time": "18:45",
+      "status": "seated",
+      "occasion": "Business",
+      "specialRequests": "Wine list prior to seating.",
+      "source": "Website",
+      "createdAt": "2026-11-09T10:00:00Z"
+    },
+    {
+      "id": "RES-009",
+      "guestName": "Victoria Secret-Palace Group",
+      "phone": "+1 (555) 890-3456",
+      "email": "events@palacegroup.com",
+      "partySize": 6,
+      "tableId": "T-401",
+      "date": "2026-11-10",
+      "time": "21:00",
+      "status": "confirmed",
+      "occasion": "VIP Dinner",
+      "specialRequests": "Private VIP security access and vintage champagne requested.",
+      "source": "Concierge",
+      "createdAt": "2026-11-07T18:00:00Z"
+    },
+    {
+      "id": "RES-010",
+      "guestName": "Zara & Maya Patel",
+      "phone": "+1 (555) 234-5678",
+      "email": "zara.patel@biotech.org",
+      "partySize": 2,
+      "tableId": "T-501",
+      "date": "2026-11-10",
+      "time": "18:00",
+      "status": "seated",
+      "occasion": "Casual Dining",
+      "specialRequests": "Tasting menu drinks at bar counter.",
+      "source": "Walk-in",
+      "createdAt": "2026-11-10T17:50:00Z"
+    },
+    {
+      "id": "RES-011",
+      "guestName": "Benjamin Franklin Cooper",
+      "phone": "+1 (555) 321-7654",
+      "email": "bcooper@arch.com",
+      "partySize": 3,
+      "tableId": null,
+      "date": "2026-11-10",
+      "time": "19:45",
+      "status": "pending",
+      "occasion": "Friends Reunion",
+      "specialRequests": "Prefers quiet booth if available.",
+      "source": "Website",
+      "createdAt": "2026-11-10T15:20:00Z"
+    },
+    {
+      "id": "RES-012",
+      "guestName": "Nathalie Beaumont",
+      "phone": "+1 (555) 654-9870",
+      "email": "nbeaumont@luxury.travel",
+      "partySize": 5,
+      "tableId": null,
+      "date": "2026-11-10",
+      "time": "20:30",
+      "status": "pending",
+      "occasion": "Celebration",
+      "specialRequests": "Vegetarian tasting options.",
+      "source": "Website",
+      "createdAt": "2026-11-10T16:00:00Z"
+    }
+  ],
+  "waitlist": [
+    {
+      "id": "WAIT-01",
+      "guestName": "Dominic & Sarah Toretto",
+      "phone": "+1 (555) 443-8899",
+      "partySize": 2,
+      "sectionPreference": "patio",
+      "quotedWaitMinutes": 15,
+      "addedAt": "18:10",
+      "status": "waiting",
+      "notes": "Ok with indoor if available earlier"
+    },
+    {
+      "id": "WAIT-02",
+      "guestName": "The Miller Family",
+      "phone": "+1 (555) 332-1144",
+      "partySize": 4,
+      "sectionPreference": "main",
+      "quotedWaitMinutes": 25,
+      "addedAt": "18:22",
+      "status": "waiting",
+      "notes": "Celebrating child graduation"
+    },
+    {
+      "id": "WAIT-03",
+      "guestName": "Oliver Queen",
+      "phone": "+1 (555) 998-7711",
+      "partySize": 1,
+      "sectionPreference": "bar",
+      "quotedWaitMinutes": 5,
+      "addedAt": "18:35",
+      "status": "notified",
+      "notes": "Standing at the lounge area"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "restaurant-reservation-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
+    "dev:react": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT\" -c \"cyan,magenta\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\"",
+    "dev:angular": "concurrently -k -p \"[{name}]\" -n \"BACKEND,ANGULAR\" -c \"cyan,yellow\" \"npm run start --prefix backend\" \"npm run start --prefix frontend-angular\"",
+    "dev:all": "concurrently -k -p \"[{name}]\" -n \"BACKEND,REACT,ANGULAR\" -c \"cyan,magenta,yellow\" \"npm run start --prefix backend\" \"npm run dev --prefix frontend-react\" \"npm run start --prefix frontend-angular\"",
+    "backend": "npm run start --prefix backend",
+    "frontend:react": "npm run dev --prefix frontend-react",
+    "frontend:angular": "npm run start --prefix frontend-angular",
+    "build:react": "npm run build --prefix frontend-react",
+    "build:angular": "npm run build --prefix frontend-angular",
+    "build:all": "npm run build --prefix frontend-react && npm run build --prefix frontend-angular"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

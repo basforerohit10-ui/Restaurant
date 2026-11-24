@@ -15,9 +15,9 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       <!-- Luxury Culinary Welcome Banner -->
       <div class="menu-hero">
         <div class="hero-left">
-          <div class="hero-badge">🍽️ FOOD COURT GOURMET SELECTION • WHITE &amp; CHOCOLATE</div>
-          <h1>Epicurean Dishes &amp; Dining Menu</h1>
-          <p>Hand-crafted culinary specialties with guest reviews, transparent pricing, and instant table booking.</p>
+          <div class="hero-badge">🍽️ FOOD COURT COMPLETE CULINARY MENU • WHITE &amp; CHOCOLATE</div>
+          <h1>Restaurant Dishes &amp; Dining Menu List</h1>
+          <p>Hand-crafted appetizers, gourmet mains, artisanal desserts &amp; craft mocktails with guest ratings and transparent prices.</p>
         </div>
         <div class="hero-right">
           <a routerLink="/reservations" class="btn-reserve-table">
@@ -27,7 +27,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Category Filter Pills & Search Bar -->
+      <!-- Controls Bar: Category Pills + Search + View Mode Switcher -->
       <div class="filter-bar">
         <div class="category-pills">
           <button
@@ -38,31 +38,114 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
           >
             <span class="cat-icon">{{ cat.icon }}</span>
             <span>{{ cat.label }}</span>
+            <span class="cat-count">({{ getCategoryCount(cat.id) }})</span>
           </button>
         </div>
 
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input
-            type="text"
-            [(ngModel)]="searchQuery"
-            placeholder="Search dish by name, ingredients, or flavor..."
-            class="menu-search-input"
-          />
+        <div class="toolbar-right">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              placeholder="Search by dish name, sauce, spice..."
+              class="menu-search-input"
+            />
+          </div>
+
+          <!-- View Mode Toggle: List (Default) vs Grid -->
+          <div class="view-toggle">
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode === 'list'"
+              (click)="viewMode = 'list'"
+              title="Hotel Menu List View"
+            >
+              <span>📋 List View</span>
+            </button>
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode === 'grid'"
+              (click)="viewMode = 'grid'"
+              title="Card Grid View"
+            >
+              <span>🎴 Grid View</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Dishes Grid -->
-      <div class="dishes-grid">
-        <div class="empty-state" *ngIf="filteredDishes.length === 0">
-          <span class="empty-icon">🍲</span>
-          <h3>No dishes matched your search</h3>
-          <p>Try searching with another keyword or select "All Dishes".</p>
-        </div>
+      <!-- Empty State If Search Yields Zero -->
+      <div class="empty-state" *ngIf="filteredDishes.length === 0">
+        <span class="empty-icon">🍲</span>
+        <h3>No dishes matched your filter</h3>
+        <p>Try searching with another keyword or select "All Dishes".</p>
+      </div>
 
+      <!-- ==================== 1. LIST VIEW (DEFAULT HOTEL RESTAURANT MENU LIST) ==================== -->
+      <div class="dishes-list" *ngIf="viewMode === 'list' && filteredDishes.length > 0">
+        <div class="menu-list-row" *ngFor="let dish of filteredDishes; let i = index">
+          <!-- Dish Number & Small Photo Thumbnail -->
+          <div class="row-left">
+            <span class="dish-num">#{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+            <div class="dish-thumb-wrap">
+              <img [src]="dish.imageUrl" [alt]="dish.name" class="dish-thumb" loading="lazy" />
+              <span class="diet-dot-badge" [class.veg]="dish.isVeg" [class.nonveg]="!dish.isVeg" [title]="dish.isVeg ? 'Vegetarian' : 'Non-Vegetarian'">
+                <span class="inner-dot"></span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Dish Info, Description, Badges -->
+          <div class="row-middle">
+            <div class="title-wrap">
+              <h3 class="dish-name">{{ dish.name }}</h3>
+              <div class="tags-wrap">
+                <span class="diet-pill" [class.veg]="dish.isVeg" [class.nonveg]="!dish.isVeg">
+                  {{ dish.isVeg ? 'VEG' : 'NON-VEG' }}
+                </span>
+                <span class="special-pill" *ngIf="dish.isChefSpecial">✨ Chef's Special</span>
+                <span class="spicy-pill" *ngIf="dish.isSpicy">🌶️ Spicy</span>
+                <span class="time-pill">⏱️ {{ dish.prepTime }}</span>
+              </div>
+            </div>
+
+            <p class="dish-desc">{{ dish.description }}</p>
+
+            <div class="sub-meta">
+              <span class="cat-tag">{{ dish.category | uppercase }}</span>
+              <span class="sep">•</span>
+              <span class="review-quick-stat" (click)="openReviewModal(dish)">
+                ⭐ <strong>{{ dish.rating }}</strong> / 5.0 ({{ dish.reviews.length }} customer reviews)
+              </span>
+            </div>
+          </div>
+
+          <!-- Price, Rating Pill, and Action Buttons -->
+          <div class="row-right">
+            <div class="price-box">
+              <span class="currency">₹</span>
+              <span class="price-val">{{ dish.price }}</span>
+            </div>
+
+            <div class="row-actions">
+              <button class="btn-list-reviews" (click)="openReviewModal(dish)">
+                <span>💬 Reviews ({{ dish.reviews.length }})</span>
+              </button>
+              <button class="btn-list-add" (click)="openAddReviewModal(dish)">
+                <span>✍️ Rate</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 2. GRID VIEW (OPTIONAL ALTERNATIVE) ==================== -->
+      <div class="dishes-grid" *ngIf="viewMode === 'grid' && filteredDishes.length > 0">
         <div class="dish-card" *ngFor="let dish of filteredDishes">
-          <!-- Small Photo Thumbnail & Badges -->
-          <div class="dish-thumb-wrap">
+          <div class="dish-thumb-wrap-grid">
             <img [src]="dish.imageUrl" [alt]="dish.name" class="dish-thumb" loading="lazy" />
             <div class="thumb-badges">
               <span class="diet-badge" [class.veg]="dish.isVeg" [class.nonveg]="!dish.isVeg">
@@ -73,7 +156,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
             </div>
           </div>
 
-          <!-- Dish Content & Pricing -->
           <div class="dish-body">
             <div class="dish-header-row">
               <h3 class="dish-name">{{ dish.name }}</h3>
@@ -85,14 +167,13 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
             <div class="dish-meta-row">
               <span class="meta-pill">⏱️ {{ dish.prepTime }}</span>
               <span class="meta-pill category-pill">{{ dish.category | uppercase }}</span>
-              <div class="rating-pill" (click)="openReviewModal(dish)" title="Click to view all reviews">
+              <div class="rating-pill" (click)="openReviewModal(dish)">
                 <span class="star-icon">⭐</span>
                 <strong>{{ dish.rating }}</strong>
-                <span class="review-count">({{ dish.reviews.length }} reviews)</span>
+                <span class="review-count">({{ dish.reviews.length }})</span>
               </div>
             </div>
 
-            <!-- Card Action Footer -->
             <div class="dish-actions">
               <button class="btn-read-reviews" (click)="openReviewModal(dish)">
                 <span>💬 Reviews ({{ dish.reviews.length }})</span>
@@ -154,7 +235,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
         <div class="modal-card small-modal" (click)="$event.stopPropagation()">
           <div class="modal-head">
             <div>
-              <span class="modal-category">WRITE A REVIEW</span>
+              <span class="modal-category">WRITE A DISH REVIEW</span>
               <h3>{{ addingReviewDish.name }}</h3>
             </div>
             <button class="btn-close" (click)="closeModals()">✕</button>
@@ -212,7 +293,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Hero Banner: Luxury Chocolate & White */
+    /* Hero Banner */
     .menu-hero {
       background: linear-gradient(135deg, #26140b, #3b2012);
       border: 1px solid rgba(217, 119, 6, 0.3);
@@ -248,7 +329,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       margin: 0;
       color: #dfcebf;
       font-size: 0.95rem;
-      max-width: 600px;
+      max-width: 620px;
     }
     .btn-reserve-table {
       display: flex;
@@ -268,11 +349,9 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45);
     }
-    .btn-arrow {
-      font-weight: 800;
-    }
+    .btn-arrow { font-weight: 800; }
 
-    /* Filter Bar */
+    /* Filter & Controls Toolbar */
     .filter-bar {
       display: flex;
       justify-content: space-between;
@@ -314,12 +393,20 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       border-color: #26140b;
       box-shadow: 0 2px 8px rgba(38, 20, 11, 0.25);
     }
+    .cat-count {
+      font-size: 0.74rem;
+      opacity: 0.8;
+    }
 
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
     .search-box {
       position: relative;
-      min-width: 280px;
-      flex: 1;
-      max-width: 380px;
+      min-width: 260px;
     }
     .search-icon {
       position: absolute;
@@ -346,27 +433,281 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       background: #ffffff;
     }
 
-    /* Dishes Grid */
+    /* View Mode Switcher */
+    .view-toggle {
+      display: flex;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .toggle-btn {
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #7d5b45;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .toggle-btn.active {
+      background: #26140b;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(38, 20, 11, 0.2);
+    }
+
+    /* ==================== 1. DISHES LIST VIEW STYLING ==================== */
+    .dishes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .menu-list-row {
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 2px 10px rgba(74, 40, 22, 0.04);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .menu-list-row:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(74, 40, 22, 0.08);
+      border-color: rgba(140, 79, 46, 0.35);
+    }
+
+    .row-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .dish-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ab653d;
+      min-width: 28px;
+    }
+    .dish-thumb-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      background: #f4ece1;
+      flex-shrink: 0;
+    }
+    .dish-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .menu-list-row:hover .dish-thumb {
+      transform: scale(1.08);
+    }
+
+    /* Diet symbol badge */
+    .diet-dot-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 18px;
+      height: 18px;
+      background: #ffffff;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+    .diet-dot-badge.veg { border: 1.5px solid #16a34a; }
+    .diet-dot-badge.nonveg { border: 1.5px solid #e11d48; }
+    .inner-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .veg .inner-dot { background: #16a34a; }
+    .nonveg .inner-dot { background: #e11d48; }
+
+    /* Middle Info */
+    .row-middle {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .dish-name {
+      margin: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #231208;
+      line-height: 1.25;
+    }
+    .tags-wrap {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .diet-pill {
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .diet-pill.veg {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid rgba(22, 163, 74, 0.3);
+    }
+    .diet-pill.nonveg {
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid rgba(225, 29, 72, 0.3);
+    }
+    .special-pill {
+      font-size: 0.62rem;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid rgba(217, 119, 6, 0.35);
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+    .spicy-pill {
+      font-size: 0.62rem;
+      font-weight: 800;
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid rgba(225, 29, 72, 0.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .time-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #7d5b45;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .dish-desc {
+      margin: 0;
+      color: #634029;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    .sub-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.74rem;
+      color: #8c4f2e;
+    }
+    .cat-tag {
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .sep { color: #d6bfb0; }
+    .review-quick-stat {
+      cursor: pointer;
+      color: #7d5b45;
+      transition: color 0.15s ease;
+    }
+    .review-quick-stat:hover {
+      color: #b45309;
+      text-decoration: underline;
+    }
+    .review-quick-stat strong { color: #b45309; }
+
+    /* Right Price & Actions */
+    .row-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+      min-width: 140px;
+    }
+    .price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      color: #231208;
+    }
+    .currency {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #b45309;
+    }
+    .price-val {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #26140b;
+      font-family: 'Playfair Display', serif;
+    }
+    .row-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-list-reviews {
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.16);
+      color: #522d1a;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-list-reviews:hover {
+      background: #522d1a;
+      color: #ffffff;
+      border-color: #522d1a;
+    }
+    .btn-list-add {
+      background: #ffffff;
+      border: 1px solid rgba(217, 119, 6, 0.35);
+      color: #b45309;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-list-add:hover { background: #fef3c7; }
+
+    /* ==================== 2. GRID VIEW STYLING ==================== */
     .dishes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 20px;
     }
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      background: #ffffff;
-      border: 1px dashed rgba(74, 40, 22, 0.2);
-      border-radius: 18px;
-      padding: 3.5rem 2rem;
-      color: #7d5b45;
-    }
-    .empty-icon {
-      font-size: 2.8rem;
-      margin-bottom: 8px;
-    }
-
-    /* Dish Card: Pure White with Chocolate accents */
     .dish-card {
       background: #ffffff;
       border: 1px solid rgba(74, 40, 22, 0.12);
@@ -382,9 +723,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       box-shadow: 0 10px 24px rgba(74, 40, 22, 0.1);
       border-color: rgba(74, 40, 22, 0.25);
     }
-
-    /* Small Photo Thumbnail */
-    .dish-thumb-wrap {
+    .dish-thumb-wrap-grid {
       width: 110px;
       height: 110px;
       position: relative;
@@ -393,16 +732,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       overflow: hidden;
       border: 1px solid rgba(74, 40, 22, 0.14);
       background: #f4ece1;
-    }
-    .dish-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-    .dish-card:hover .dish-thumb {
-      transform: scale(1.06);
     }
     .thumb-badges {
       position: absolute;
@@ -422,26 +751,10 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       align-items: center;
       gap: 4px;
       width: fit-content;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-    .diet-badge.veg {
-      background: #ffffff;
-      color: #15803d;
-      border: 1px solid #16a34a;
-    }
-    .diet-badge.nonveg {
-      background: #ffffff;
-      color: #be123c;
-      border: 1px solid #e11d48;
-    }
-    .diet-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
-    .veg .diet-dot { background: #16a34a; }
-    .nonveg .diet-dot { background: #e11d48; }
-
+    .diet-badge.veg { background: #ffffff; color: #15803d; border: 1px solid #16a34a; }
+    .diet-badge.nonveg { background: #ffffff; color: #be123c; border: 1px solid #e11d48; }
+    .diet-dot { width: 6px; height: 6px; border-radius: 50%; }
     .special-badge {
       font-size: 0.58rem;
       font-weight: 800;
@@ -450,10 +763,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       padding: 2px 5px;
       border-radius: 4px;
       width: fit-content;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
     }
-
-    /* Dish Body */
     .dish-body {
       flex: 1;
       display: flex;
@@ -466,38 +776,17 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       align-items: flex-start;
       gap: 8px;
     }
-    .dish-name {
-      margin: 0;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.08rem;
-      color: #231208;
-      font-weight: 700;
-      line-height: 1.25;
-    }
     .dish-price {
       font-size: 1.15rem;
       font-weight: 800;
       color: #8c4f2e;
-      white-space: nowrap;
     }
-
-    .dish-desc {
-      margin: 6px 0 10px;
-      color: #7d5b45;
-      font-size: 0.82rem;
-      line-height: 1.45;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
     .dish-meta-row {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin: 8px 0 12px;
     }
     .meta-pill {
       font-size: 0.7rem;
@@ -513,7 +802,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       background: #fef3c7;
       border-color: rgba(217, 119, 6, 0.2);
     }
-
     .rating-pill {
       font-size: 0.72rem;
       background: #faf7f2;
@@ -524,19 +812,8 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      transition: background 0.15s ease;
     }
-    .rating-pill:hover {
-      background: #f4ece1;
-    }
-    .star-icon { color: #f59e0b; }
-    .review-count { color: #7d5b45; font-size: 0.68rem; }
-
-    /* Dish Actions */
-    .dish-actions {
-      display: flex;
-      gap: 8px;
-    }
+    .dish-actions { display: flex; gap: 8px; }
     .btn-read-reviews {
       flex: 1;
       background: #faf7f2;
@@ -547,13 +824,8 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
-    .btn-read-reviews:hover {
-      background: #522d1a;
-      color: #ffffff;
-      border-color: #522d1a;
-    }
+    .btn-read-reviews:hover { background: #522d1a; color: #ffffff; }
     .btn-add-review {
       background: #ffffff;
       border: 1px solid rgba(217, 119, 6, 0.35);
@@ -563,13 +835,21 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
-    .btn-add-review:hover {
-      background: #fef3c7;
-    }
+    .btn-add-review:hover { background: #fef3c7; }
 
-    /* Modal Backdrop */
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      background: #ffffff;
+      border: 1px dashed rgba(74, 40, 22, 0.2);
+      border-radius: 18px;
+      padding: 3.5rem 2rem;
+      color: #7d5b45;
+    }
+    .empty-icon { font-size: 2.8rem; margin-bottom: 8px; }
+
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -580,7 +860,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      animation: fadeIn 0.2s ease;
     }
     .modal-card {
       width: 100%;
@@ -595,7 +874,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       flex-direction: column;
     }
     .small-modal { max-width: 480px; }
-
     .modal-head {
       padding: 1.5rem 1.75rem;
       border-bottom: 1px solid rgba(74, 40, 22, 0.1);
@@ -605,11 +883,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       gap: 16px;
       background: #faf7f2;
     }
-    .modal-dish-preview {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .modal-dish-preview { display: flex; align-items: center; gap: 14px; }
     .modal-thumb {
       width: 56px;
       height: 56px;
@@ -646,7 +920,6 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
     }
     .btn-close:hover { background: #e2ad8e; color: #231208; }
 
-    /* Modal Reviews List */
     .modal-reviews-list {
       padding: 1.5rem 1.75rem;
       display: flex;
@@ -659,11 +932,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       align-items: center;
       margin-bottom: 4px;
     }
-    .reviews-title-row h4 {
-      margin: 0;
-      font-size: 0.92rem;
-      color: #231208;
-    }
+    .reviews-title-row h4 { margin: 0; font-size: 0.92rem; color: #231208; }
     .btn-inline-add {
       background: none;
       border: none;
@@ -703,22 +972,10 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       justify-content: center;
       font-size: 0.8rem;
     }
-    .rev-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .rev-stars .star {
-      color: #d1d5db;
-      font-size: 0.85rem;
-    }
-    .rev-stars .star.filled {
-      color: #f59e0b;
-    }
-    .rev-date {
-      font-size: 0.7rem;
-      color: #9c806f;
-    }
+    .rev-meta { display: flex; align-items: center; gap: 10px; }
+    .rev-stars .star { color: #d1d5db; font-size: 0.85rem; }
+    .rev-stars .star.filled { color: #f59e0b; }
+    .rev-date { font-size: 0.7rem; color: #9c806f; }
     .rev-comment {
       margin: 0;
       color: #573926;
@@ -727,7 +984,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-style: italic;
     }
 
-    /* Add Review Form */
+    /* Review Form */
     .review-form {
       padding: 1.5rem 1.75rem;
       display: flex;
@@ -757,35 +1014,18 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       border-color: #8c4f2e;
       background: #ffffff;
     }
-    .star-rating-selector {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .star-rating-selector { display: flex; align-items: center; gap: 6px; }
     .star-select-btn {
       background: none;
       border: none;
       font-size: 1.6rem;
       color: #d1d5db;
       cursor: pointer;
-      transition: color 0.15s ease;
       padding: 0 2px;
     }
-    .star-select-btn.active {
-      color: #f59e0b;
-    }
-    .rating-label {
-      margin-left: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #8c4f2e;
-    }
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 6px;
-    }
+    .star-select-btn.active { color: #f59e0b; }
+    .rating-label { margin-left: 8px; font-size: 0.84rem; font-weight: 700; color: #8c4f2e; }
+    .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
     .btn-cancel {
       background: #faf7f2;
       border: 1px solid rgba(74, 40, 22, 0.15);
@@ -806,18 +1046,21 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-size: 0.84rem;
       cursor: pointer;
     }
-    .btn-submit-review:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .btn-submit-review:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    @media (max-width: 768px) {
-      .dish-card {
+    @media (max-width: 850px) {
+      .menu-list-row {
         flex-direction: column;
+        align-items: flex-start;
       }
-      .dish-thumb-wrap {
+      .row-right {
         width: 100%;
-        height: 180px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px dashed rgba(74, 40, 22, 0.12);
+        padding-top: 10px;
+        margin-top: 6px;
       }
     }
   `]
@@ -828,6 +1071,7 @@ export class MenuComponent {
 
   searchQuery = '';
   selectedCategory = 'all';
+  viewMode: 'list' | 'grid' = 'list'; // Default to List format as requested!
 
   categories = [
     { id: 'all', label: 'All Dishes', icon: '🍽️' },
@@ -843,6 +1087,12 @@ export class MenuComponent {
   newReviewerName = this.authService.getCurrentUser()?.name || 'Valued Diner';
   newRating = 5;
   newComment = '';
+
+  getCategoryCount(categoryId: string): number {
+    const dishes = this.menuService.getDishes();
+    if (categoryId === 'all') return dishes.length;
+    return dishes.filter(d => d.category === categoryId).length;
+  }
 
   get filteredDishes(): MenuItem[] {
     const dishes = this.menuService.getDishes();
@@ -885,7 +1135,6 @@ export class MenuComponent {
       comment: this.newComment.trim()
     });
 
-    // Refresh active preview
     const updated = this.menuService.getDishById(this.addingReviewDish.id);
     this.closeModals();
     if (updated) {

@@ -14,6 +14,7 @@ A full-stack, enterprise-grade restaurant reservation and dining table floor man
 | **Full Client-Side Routing** | Angular Router (`provideRouter`) with routes for **Dashboard**, **Floor Plan**, **Reservations**, **Waitlist**, **Guest CRM**, and **Analytics**. |
 | **Two-Way Data Binding & Forms** | `[(ngModel)]` and `FormsModule` for reactive search, filtering, and reservation/waitlist modal forms. |
 | **HTTP Client & Dependency Injection** | `provideHttpClient()` connecting to Node.js/Express REST API on Port 5000 with automatic offline seed data fallback. |
+| **Authentication & Route Guards** | **Angular Functional Route Guards (`authGuard`, `loginGuard`)** protecting floor routes, session persistence in `localStorage`, and role-based staff login (Admin, Manager, Hostess). |
 | **Interactive UX & Audio Feedback** | Web Audio API synthesizer chimes on seating/booking and floating Toast notification system. |
 | **Run Sheet Export** | 1-click **CSV export** for daily host stand seating runs. |
 

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RestaurantService } from '../../services/restaurant.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -41,11 +42,24 @@ import { RestaurantService } from '../../services/restaurant.service';
         </div>
       </div>
 
-      <!-- Quick Action Controls -->
+      <!-- Quick Action Controls & User Identity -->
       <div class="controls">
+        <div class="user-pill" *ngIf="(currentUser$ | async) as user">
+          <span class="user-avatar">{{ user.avatar }}</span>
+          <div class="user-meta">
+            <span class="user-name">{{ user.name }}</span>
+            <span class="user-role">{{ user.roleLabel }}</span>
+          </div>
+        </div>
+
+        <button class="btn-logout" (click)="logout()" title="Sign out of Food Court">
+          <span class="btn-icon">🚪</span>
+          <span>Sign Out</span>
+        </button>
+
         <button class="btn-reset" (click)="resetDemo()" title="Reset to initial seed data">
           <span class="btn-icon">🔄</span>
-          <span>Reset Demo</span>
+          <span>Reset</span>
         </button>
       </div>
     </header>
@@ -192,6 +206,68 @@ import { RestaurantService } from '../../services/restaurant.service';
       gap: 12px;
     }
 
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 5px 12px 5px 6px;
+      border-radius: 9999px;
+    }
+
+    .user-avatar {
+      font-size: 1.15rem;
+      width: 32px;
+      height: 32px;
+      background: #3b2012;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .user-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .user-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fffbf7;
+    }
+
+    .user-role {
+      font-size: 0.65rem;
+      color: #fbbf24;
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(225, 29, 72, 0.14);
+      border: 1px solid rgba(225, 29, 72, 0.35);
+      color: #fca5a5;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(225, 29, 72, 0.28);
+      border-color: #ef4444;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
     .btn-reset {
       display: flex;
       align-items: center;
@@ -217,6 +293,9 @@ import { RestaurantService } from '../../services/restaurant.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private restaurantService = inject(RestaurantService);
+  private authService = inject(AuthService);
+
+  currentUser$ = this.authService.currentUser$;
   backendOnline$ = this.restaurantService.backendOnline$;
   metrics = this.restaurantService.getMetrics();
   currentTime = '';
@@ -241,6 +320,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       second: '2-digit',
       hour12: true
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   resetDemo() {

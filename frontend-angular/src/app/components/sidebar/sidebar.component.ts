@@ -76,7 +76,7 @@ import { AuthService } from '../../services/auth.service';
 
             <a routerLink="/guests" routerLinkActive="active" class="nav-item">
               <span class="nav-icon">👥</span>
-              <span class="nav-label">Guest CRM &amp; VIPs</span>
+              <span class="nav-label">Live Visitors &amp; CRM</span>
               <span class="active-indicator"></span>
             </a>
           </ng-container>

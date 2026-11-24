@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RestaurantService } from './restaurant.service';
+import { VisitorService } from './visitor.service';
 
 export interface UserSession {
   username: string;
@@ -35,6 +36,7 @@ const STORAGE_KEY = 'foodcourt_auth_session';
 export class AuthService {
   private router = inject(Router);
   private restaurantService = inject(RestaurantService);
+  private visitorService = inject(VisitorService);
 
   private currentUserSubject = new BehaviorSubject<UserSession | null>(this.loadStoredUser());
   public currentUser$: Observable<UserSession | null> = this.currentUserSubject.asObservable();
@@ -134,6 +136,14 @@ export class AuthService {
     };
 
     this.saveSession(session);
+    this.visitorService.logVisit({
+      name: session.name,
+      phone: session.phone || 'N/A',
+      userType: 'customer',
+      roleOrPost: 'Guest / Customer',
+      action: 'Logged in to explore Food Court menu & guest reviews',
+      station: 'Customer Self-Service'
+    });
     this.restaurantService.showToast(`Welcome to Food Court, ${session.name}! Enjoy our menu.`, 'success');
     this.router.navigate(['/menu']);
     return { success: true, message: 'Welcome to Food Court!' };
@@ -170,6 +180,14 @@ export class AuthService {
         loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       this.saveSession(session);
+      this.visitorService.logVisit({
+        name: session.name,
+        phone: 'Staff Internal',
+        userType: 'staff',
+        roleOrPost: session.postTitle,
+        action: `Staff Station sign-in as ${session.postTitle}`,
+        station: 'Staff Console'
+      });
       this.restaurantService.showToast(`Welcome back, ${session.name} (${session.postTitle})!`, 'success');
       this.router.navigate(['/']);
       return { success: true, message: 'Staff login successful.' };
@@ -214,6 +232,14 @@ export class AuthService {
       loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     this.saveSession(session);
+    this.visitorService.logVisit({
+      name: session.name,
+      phone: 'Staff Internal',
+      userType: 'staff',
+      roleOrPost: session.postTitle,
+      action: `1-Click quick access to station: ${session.postTitle}`,
+      station: 'Staff Terminal'
+    });
     this.restaurantService.showToast(`Staff Station Online: ${session.name} (${session.postTitle})`, 'success');
     this.router.navigate(['/']);
   }

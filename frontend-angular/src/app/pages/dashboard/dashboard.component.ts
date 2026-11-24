@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
+import { VisitorService } from '../../services/visitor.service';
 import { RestaurantMetrics } from '../../models/restaurant.model';
 
 @Component({
@@ -140,6 +141,39 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
               </div>
               <span class="chip-seats">{{ t.capacity }} Seats</span>
               <span class="chip-status">{{ t.status | titlecase }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Visitor Activity Feed on Dashboard -->
+      <div class="panel visitor-dash-panel">
+        <div class="panel-header">
+          <div>
+            <h3>👥 Live Customer &amp; Staff Visitor Logs</h3>
+            <p class="panel-sub">Real-time footfall of who is currently visiting and exploring Food Court.</p>
+          </div>
+          <a routerLink="/guests" class="link-more">View Full Visitor Logs →</a>
+        </div>
+
+        <div class="dash-visitors-grid" *ngIf="(visitors$ | async) as visList">
+          <div class="dash-vis-chip" *ngFor="let v of visList.slice(0, 4)">
+            <div class="chip-avatar" [class.staff-chip]="v.userType === 'staff'">
+              {{ v.userType === 'customer' ? '👤' : '💼' }}
+            </div>
+            <div class="chip-info">
+              <div class="chip-name-row">
+                <strong class="chip-name">{{ v.name }}</strong>
+                <span class="chip-type-tag" [class.cust]="v.userType === 'customer'" [class.stf]="v.userType === 'staff'">
+                  {{ v.userType === 'customer' ? 'Customer' : 'Staff' }}
+                </span>
+              </div>
+              <span class="chip-role">{{ v.roleOrPost }}</span>
+              <p class="chip-action">↳ {{ v.action }}</p>
+            </div>
+            <div class="chip-time">
+              <strong>{{ v.timestamp }}</strong>
+              <span class="chip-active">● Active</span>
             </div>
           </div>
         </div>
@@ -497,12 +531,105 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     .table-chip.available .chip-status { color: #15803d; }
     .table-chip.occupied .chip-status { color: #be123c; }
     .table-chip.reserved .chip-status { color: #b45309; }
+
+    /* Dashboard Live Visitors Feed */
+    .dash-visitors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .dash-vis-chip {
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .dash-vis-chip:hover {
+      background: #ffffff;
+      border-color: #8c4f2e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 40, 22, 0.06);
+    }
+    .chip-avatar {
+      font-size: 1.3rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f0fdf4;
+      border: 1px solid rgba(22, 163, 74, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .chip-avatar.staff-chip {
+      background: #fdf5ef;
+      border-color: rgba(140, 79, 46, 0.25);
+    }
+    .chip-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .chip-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip-name {
+      font-size: 0.9rem;
+      color: #231208;
+    }
+    .chip-type-tag {
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .chip-type-tag.cust { background: #dcfce7; color: #15803d; }
+    .chip-type-tag.stf { background: #fdf5ef; color: #8c4f2e; }
+    .chip-role {
+      font-size: 0.72rem;
+      color: #7d5b45;
+    }
+    .chip-action {
+      margin: 2px 0 0;
+      font-size: 0.74rem;
+      color: #573926;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chip-time {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      font-size: 0.74rem;
+      color: #231208;
+      flex-shrink: 0;
+    }
+    .chip-active {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #15803d;
+    }
   `]
 })
 export class DashboardComponent {
   private restaurantService = inject(RestaurantService);
+  private visitorService = inject(VisitorService);
+
   reservations$ = this.restaurantService.reservations$;
   tables$ = this.restaurantService.tables$;
+  visitors$ = this.visitorService.visitors$;
 
   get metrics(): RestaurantMetrics {
     return this.restaurantService.getMetrics();

@@ -95,3 +95,17 @@ export interface MenuItem {
   reviews: DishReview[];
 }
 
+export interface VisitorLogEntry {
+  id: string;
+  name: string;
+  phone?: string;
+  userType: 'customer' | 'staff';
+  roleOrPost: string;
+  timestamp: string;
+  timeAgo: string;
+  action: string;
+  status: 'active' | 'completed';
+  station: string;
+}
+
+

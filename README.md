@@ -1,4 +1,4 @@
-# AuraBistro | Restaurant Reservation & Table Management System (Angular Edition)
+# Food Court | Restaurant Reservation & Table Management System (Angular Edition)
 
 A full-stack, enterprise-grade restaurant reservation and dining table floor management system built with **Angular (v18+)** and a **Node.js / Express REST API** backend.
 
@@ -6,7 +6,7 @@ A full-stack, enterprise-grade restaurant reservation and dining table floor man
 
 ## 🌟 Academic & Technical Highlights (Teacher / Evaluation Checklist)
 
-| Requirement | Implementation in AuraBistro |
+| Requirement | Implementation in Food Court |
 |---|---|
 | **Modern Angular Architecture** | Angular 18+ **Standalone Components** (`standalone: true`), no NgModule bloat. |
 | **Reactive State Management** | **RxJS `BehaviorSubject` & `Observable`** (`tables$`, `reservations$`, `waitlist$`, `guests$`). |

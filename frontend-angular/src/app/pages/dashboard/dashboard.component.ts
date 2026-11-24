@@ -13,7 +13,7 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       <!-- Luxury Chocolate & Ivory Welcome Banner -->
       <div class="hero-banner">
         <div class="banner-content">
-          <div class="banner-tag">FINE DINING OPERATIONAL SUITE • WHITE &amp; CHOCOLATE</div>
+          <div class="banner-tag">FOOD COURT MANAGEMENT • WHITE &amp; CHOCOLATE</div>
           <h2>Floor Control &amp; Seating Analytics</h2>
           <p>Real-time dining room occupancy, reservations intake timeline, and walk-in queue management.</p>
         </div>

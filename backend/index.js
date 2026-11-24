@@ -28,7 +28,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
     timestamp: new Date().toISOString(),
-    service: 'AuraBistro Restaurant Management API',
+    service: 'Food Court Restaurant Management API',
     version: '1.0.0'
   });
 });

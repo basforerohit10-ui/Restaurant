@@ -56,7 +56,7 @@ import { RouterModule } from '@angular/router';
             <span class="badge-tag">ANGULAR 18+</span>
             <span class="badge-pulse">● LIVE</span>
           </div>
-          <h4 class="card-title">Chocolate &amp; Ivory Edition</h4>
+          <h4 class="card-title">Food Court Edition</h4>
           <p class="card-desc">Standalone Components, RxJS State Management, and TypeScript operations.</p>
         </div>
       </div>

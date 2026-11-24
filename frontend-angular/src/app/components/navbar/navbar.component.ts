@@ -11,14 +11,14 @@ import { RestaurantService } from '../../services/restaurant.service';
       <!-- Brand Logo & Identity -->
       <div class="brand">
         <div class="logo-gem">
-          <span class="icon">✨</span>
+          <span class="icon">🍽️</span>
         </div>
         <div class="brand-text">
-          <h1 class="brand-title">AURA<span>BISTRO</span></h1>
+          <h1 class="brand-title">FOOD <span>COURT</span></h1>
           <div class="brand-meta">
             <span class="edition-pill">ANGULAR 18 EDITION</span>
             <span class="dot-sep">•</span>
-            <span class="sub-label">WHITE &amp; CHOCOLATE FINE DINING</span>
+            <span class="sub-label">WHITE &amp; CHOCOLATE RESTAURANT</span>
           </div>
         </div>
       </div>

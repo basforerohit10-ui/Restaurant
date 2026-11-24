@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <header class="navbar">
       <!-- Brand Logo & Identity -->
@@ -44,11 +45,15 @@ import { AuthService } from '../../services/auth.service';
 
       <!-- Quick Action Controls & User Identity -->
       <div class="controls">
+        <a routerLink="/menu" class="btn-menu-pill">
+          <span>🍽️ Menu &amp; Reviews</span>
+        </a>
+
         <div class="user-pill" *ngIf="(currentUser$ | async) as user">
           <span class="user-avatar">{{ user.avatar }}</span>
           <div class="user-meta">
             <span class="user-name">{{ user.name }}</span>
-            <span class="user-role">{{ user.roleLabel }}</span>
+            <span class="user-role">{{ user.postTitle }}</span>
           </div>
         </div>
 
@@ -57,7 +62,7 @@ import { AuthService } from '../../services/auth.service';
           <span>Sign Out</span>
         </button>
 
-        <button class="btn-reset" (click)="resetDemo()" title="Reset to initial seed data">
+        <button class="btn-reset" *ngIf="isStaff$ | async" (click)="resetDemo()" title="Reset to initial seed data">
           <span class="btn-icon">🔄</span>
           <span>Reset</span>
         </button>
@@ -246,6 +251,27 @@ import { AuthService } from '../../services/auth.service';
       font-weight: 600;
     }
 
+    .btn-menu-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217, 119, 6, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #fef3c7;
+      padding: 7px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .btn-menu-pill:hover {
+      background: rgba(217, 119, 6, 0.35);
+      border-color: #fbbf24;
+      transform: translateY(-1px);
+    }
+
     .btn-logout {
       display: flex;
       align-items: center;
@@ -296,6 +322,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
 
   currentUser$ = this.authService.currentUser$;
+  isStaff$ = this.authService.isStaff$;
+  isCustomer$ = this.authService.isCustomer$;
   backendOnline$ = this.restaurantService.backendOnline$;
   metrics = this.restaurantService.getMetrics();
   currentTime = '';

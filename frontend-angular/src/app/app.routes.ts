@@ -6,7 +6,8 @@ import { ReservationsComponent } from './pages/reservations/reservations.compone
 import { WaitlistComponent } from './pages/waitlist/waitlist.component';
 import { GuestsComponent } from './pages/guests/guests.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
-import { authGuard, loginGuard } from './guards/auth.guard';
+import { MenuComponent } from './pages/menu/menu.component';
+import { authGuard, loginGuard, staffOnlyGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,11 @@ export const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    canActivate: [authGuard, staffOnlyGuard]
+  },
+  {
+    path: 'menu',
+    component: MenuComponent,
     canActivate: [authGuard]
   },
   {
@@ -37,12 +43,12 @@ export const routes: Routes = [
   {
     path: 'guests',
     component: GuestsComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard, staffOnlyGuard]
   },
   {
     path: 'analytics',
     component: AnalyticsComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard, staffOnlyGuard]
   },
   {
     path: '**',

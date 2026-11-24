@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,55 +10,98 @@ import { RouterModule } from '@angular/router';
   template: `
     <aside class="sidebar">
       <div class="sidebar-top">
-        <div class="nav-section-title">NAVIGATION MENU</div>
+        <div class="nav-section-title">
+          {{ (isCustomer$ | async) ? 'GUEST DINING MENU' : 'STAFF OPERATIONS MENU' }}
+        </div>
+
         <nav class="nav-links">
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
-            <span class="nav-icon">📊</span>
-            <span class="nav-label">Dashboard</span>
-            <span class="active-indicator"></span>
-          </a>
+          <!-- ============ CUSTOMER SPECIFIC NAVIGATION ============ -->
+          <ng-container *ngIf="isCustomer$ | async">
+            <a routerLink="/menu" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">🍽️</span>
+              <span class="nav-label">Food &amp; Dishes Menu</span>
+              <span class="active-indicator"></span>
+            </a>
 
-          <a routerLink="/tables" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">🪑</span>
-            <span class="nav-label">Table Floor Plan</span>
-            <span class="active-indicator"></span>
-          </a>
+            <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span class="nav-label">Book a Dining Table</span>
+              <span class="active-indicator"></span>
+            </a>
 
-          <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">📅</span>
-            <span class="nav-label">Reservations</span>
-            <span class="active-indicator"></span>
-          </a>
+            <a routerLink="/tables" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">🪑</span>
+              <span class="nav-label">Restaurant Layout</span>
+              <span class="active-indicator"></span>
+            </a>
 
-          <a routerLink="/waitlist" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">⏳</span>
-            <span class="nav-label">Walk-In Waitlist</span>
-            <span class="active-indicator"></span>
-          </a>
+            <a routerLink="/waitlist" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">⏳</span>
+              <span class="nav-label">Walk-In Waiting Stand</span>
+              <span class="active-indicator"></span>
+            </a>
+          </ng-container>
 
-          <a routerLink="/guests" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">👥</span>
-            <span class="nav-label">Guest CRM &amp; VIPs</span>
-            <span class="active-indicator"></span>
-          </a>
+          <!-- ============ STAFF OPERATIONAL NAVIGATION ============ -->
+          <ng-container *ngIf="isStaff$ | async">
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+              <span class="nav-icon">📊</span>
+              <span class="nav-label">Dashboard</span>
+              <span class="active-indicator"></span>
+            </a>
 
-          <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">⚡</span>
-            <span class="nav-label">Array Studio &amp; TS</span>
-            <span class="active-indicator"></span>
-          </a>
+            <a routerLink="/tables" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">🪑</span>
+              <span class="nav-label">Table Floor Plan</span>
+              <span class="active-indicator"></span>
+            </a>
+
+            <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span class="nav-label">Reservations &amp; CSV</span>
+              <span class="active-indicator"></span>
+            </a>
+
+            <a routerLink="/waitlist" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">⏳</span>
+              <span class="nav-label">Walk-In Waitlist</span>
+              <span class="active-indicator"></span>
+            </a>
+
+            <a routerLink="/menu" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">🍽️</span>
+              <span class="nav-label">Dishes &amp; Reviews</span>
+              <span class="active-indicator"></span>
+            </a>
+
+            <a routerLink="/guests" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">👥</span>
+              <span class="nav-label">Guest CRM &amp; VIPs</span>
+              <span class="active-indicator"></span>
+            </a>
+
+            <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
+              <span class="nav-icon">⚡</span>
+              <span class="nav-label">Array Studio &amp; TS</span>
+              <span class="active-indicator"></span>
+            </a>
+          </ng-container>
         </nav>
       </div>
 
-      <!-- Bottom Tech Badge -->
+      <!-- Bottom Identity / Tech Badge -->
       <div class="sidebar-bottom">
-        <div class="tech-card">
+        <div class="tech-card" *ngIf="(currentUser$ | async) as user">
           <div class="badge-head">
-            <span class="badge-tag">ANGULAR 18+</span>
-            <span class="badge-pulse">● LIVE</span>
+            <span class="badge-tag">{{ user.userType === 'customer' ? 'GUEST PORTAL' : 'STAFF STATION' }}</span>
+            <span class="badge-pulse">● ACTIVE</span>
           </div>
-          <h4 class="card-title">Food Court Edition</h4>
-          <p class="card-desc">Standalone Components, RxJS State Management, and TypeScript operations.</p>
+          <h4 class="card-title">{{ user.postTitle }}</h4>
+          <p class="card-desc">
+            {{ user.userType === 'customer' 
+                ? 'Browse specialties, explore guest reviews & enjoy fine dining.' 
+                : 'Role: ' + user.name + ' logged in with post authorization.' }}
+          </p>
         </div>
       </div>
     </aside>
@@ -191,4 +235,9 @@ import { RouterModule } from '@angular/router';
     }
   `]
 })
-export class SidebarComponent {}
+export class SidebarComponent {
+  private authService = inject(AuthService);
+  currentUser$ = this.authService.currentUser$;
+  isStaff$ = this.authService.isStaff$;
+  isCustomer$ = this.authService.isCustomer$;
+}

@@ -14,22 +14,38 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  // Not logged in -> Send straight to login page with return url
   return router.createUrlTree(['/login'], {
     queryParams: { returnUrl: state.url !== '/' ? state.url : undefined }
   });
 };
 
 /**
- * Guard for /login page: if already logged in, redirect straight to dashboard.
+ * Guard for /login page: if already logged in, redirect to appropriate home.
  */
 export const loginGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
   if (authService.isLoggedIn()) {
+    if (authService.isCustomer()) {
+      return router.createUrlTree(['/menu']);
+    }
     return router.createUrlTree(['/']);
   }
 
+  return true;
+};
+
+/**
+ * Guard for staff-only operational screens (Dashboard, Guest CRM, Array Studio).
+ * Redirects customers to /menu.
+ */
+export const staffOnlyGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isLoggedIn() && authService.isCustomer()) {
+    return router.createUrlTree(['/menu']);
+  }
   return true;
 };

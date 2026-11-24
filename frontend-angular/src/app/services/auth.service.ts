@@ -7,10 +7,24 @@ import { RestaurantService } from './restaurant.service';
 export interface UserSession {
   username: string;
   name: string;
-  role: 'admin' | 'manager' | 'hostess' | 'staff';
+  userType: 'customer' | 'staff';
+  role: 'customer' | 'admin' | 'manager' | 'hostess' | 'chef';
   roleLabel: string;
+  postTitle: string;
   avatar: string;
+  phone?: string;
   loginTime: string;
+}
+
+export interface StaffAccount {
+  id: string;
+  username: string;
+  password: string;
+  name: string;
+  postKey: 'admin' | 'manager' | 'hostess' | 'chef';
+  postTitle: string;
+  avatar: string;
+  description: string;
 }
 
 const STORAGE_KEY = 'foodcourt_auth_session';
@@ -25,32 +39,50 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<UserSession | null>(this.loadStoredUser());
   public currentUser$: Observable<UserSession | null> = this.currentUserSubject.asObservable();
   public isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(map(user => !!user));
+  public isStaff$: Observable<boolean> = this.currentUser$.pipe(map(user => user?.userType === 'staff'));
+  public isCustomer$: Observable<boolean> = this.currentUser$.pipe(map(user => user?.userType === 'customer'));
 
-  // Pre-configured staff accounts
-  private validAccounts = [
+  // Pre-configured Staff Accounts with specific Posts/Designations
+  public readonly staffPosts: StaffAccount[] = [
     {
+      id: 'staff-admin',
       username: 'admin',
       password: 'admin123',
       name: 'Rohit Basfore',
-      role: 'admin' as const,
-      roleLabel: 'General Manager & Admin',
-      avatar: '👨‍💼'
+      postKey: 'admin',
+      postTitle: 'General Manager & Admin',
+      avatar: '👨‍💼',
+      description: 'Complete master access to tables, CRM, analytics, reservations & menu'
     },
     {
+      id: 'staff-manager',
       username: 'manager',
       password: 'password123',
       name: 'Vikram Mehta',
-      role: 'manager' as const,
-      roleLabel: 'Floor Operations Manager',
-      avatar: '🤵'
+      postKey: 'manager',
+      postTitle: 'Floor Operations Manager',
+      avatar: '🤵',
+      description: 'Dining floor management, table turns, seatings, and shift control'
     },
     {
+      id: 'staff-hostess',
       username: 'hostess',
       password: 'password123',
       name: 'Priya Sharma',
-      role: 'hostess' as const,
-      roleLabel: 'Head Hostess Stand',
-      avatar: '👩‍💼'
+      postKey: 'hostess',
+      postTitle: 'Head Hostess Stand',
+      avatar: '👩‍💼',
+      description: 'Host stand intake, walk-in queue, table reservations & check-in'
+    },
+    {
+      id: 'staff-chef',
+      username: 'chef',
+      password: 'password123',
+      name: 'Ranveer Brar',
+      postKey: 'chef',
+      postTitle: 'Executive Head Chef',
+      avatar: '👨‍🍳',
+      description: 'Kitchen menu management, dishes review feedback & daily specials'
     }
   ];
 
@@ -61,7 +93,7 @@ export class AuthService {
         return JSON.parse(data);
       }
     } catch {
-      // localStorage may fail in some environments
+      // ignore localStorage errors
     }
     return null;
   }
@@ -70,69 +102,119 @@ export class AuthService {
     return !!this.currentUserSubject.value;
   }
 
+  isStaff(): boolean {
+    return this.currentUserSubject.value?.userType === 'staff';
+  }
+
+  isCustomer(): boolean {
+    return this.currentUserSubject.value?.userType === 'customer';
+  }
+
   getCurrentUser(): UserSession | null {
     return this.currentUserSubject.value;
   }
 
-  login(usernameInput: string, passwordInput: string): { success: boolean; message: string } {
+  // 1. Customer Login (For normal visitors browsing the food court, dishes, and booking tables)
+  customerLogin(name: string, phone?: string): { success: boolean; message: string } {
+    const trimmedName = (name || '').trim();
+    if (!trimmedName) {
+      return { success: false, message: 'Please enter your name to explore the Food Court menu.' };
+    }
+
+    const session: UserSession = {
+      username: trimmedName.toLowerCase().replace(/\s+/g, '.'),
+      name: trimmedName,
+      userType: 'customer',
+      role: 'customer',
+      roleLabel: 'Valued Guest & Diner',
+      postTitle: 'Guest / Customer',
+      avatar: '👤',
+      phone: phone || '',
+      loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    this.saveSession(session);
+    this.restaurantService.showToast(`Welcome to Food Court, ${session.name}! Enjoy our menu.`, 'success');
+    this.router.navigate(['/menu']);
+    return { success: true, message: 'Welcome to Food Court!' };
+  }
+
+  quickCustomerLogin(presetName: string = 'Sneha Kapoor'): void {
+    this.customerLogin(presetName, '+91 98765 43210');
+  }
+
+  // 2. Staff Post-Wise Login
+  staffLogin(usernameInput: string, passwordInput: string, selectedPostKey?: string): { success: boolean; message: string } {
     const username = (usernameInput || '').trim().toLowerCase();
     const password = (passwordInput || '').trim();
 
     if (!username || !password) {
-      return { success: false, message: 'Please enter both username and password.' };
+      return { success: false, message: 'Please enter staff username and access password.' };
     }
 
-    // Check pre-configured staff list
-    const found = this.validAccounts.find(
-      acc => acc.username.toLowerCase() === username && acc.password === password
-    );
+    const matched = this.staffPosts.find(acc => {
+      const usernameMatch = acc.username.toLowerCase() === username;
+      const postMatch = !selectedPostKey || acc.postKey === selectedPostKey;
+      return usernameMatch && postMatch;
+    });
 
-    let session: UserSession;
-
-    if (found) {
-      session = {
-        username: found.username,
-        name: found.name,
-        role: found.role,
-        roleLabel: found.roleLabel,
-        avatar: found.avatar,
+    if (matched && matched.password === password) {
+      const session: UserSession = {
+        username: matched.username,
+        name: matched.name,
+        userType: 'staff',
+        role: matched.postKey,
+        roleLabel: matched.postTitle,
+        postTitle: matched.postTitle,
+        avatar: matched.avatar,
         loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-    } else if (password === 'admin123' || password === 'password123' || password.length >= 4) {
-      // Flexible fallback for custom names
+      this.saveSession(session);
+      this.restaurantService.showToast(`Welcome back, ${session.name} (${session.postTitle})!`, 'success');
+      this.router.navigate(['/']);
+      return { success: true, message: 'Staff login successful.' };
+    }
+
+    // Fallback password check for admin/manager/chef
+    if (password === 'admin123' || password === 'password123') {
+      const post = this.staffPosts.find(p => p.postKey === selectedPostKey) || this.staffPosts[0];
       const displayName = usernameInput.charAt(0).toUpperCase() + usernameInput.slice(1);
-      session = {
+      const session: UserSession = {
         username,
         name: displayName,
-        role: 'manager',
-        roleLabel: 'Restaurant Staff',
-        avatar: '👤',
+        userType: 'staff',
+        role: post.postKey,
+        roleLabel: post.postTitle,
+        postTitle: post.postTitle,
+        avatar: post.avatar,
         loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-    } else {
-      return {
-        success: false,
-        message: 'Invalid credentials. Use demo account (admin / admin123) or password123.'
-      };
+      this.saveSession(session);
+      this.restaurantService.showToast(`Staff sign-in granted for ${session.name}`, 'success');
+      this.router.navigate(['/']);
+      return { success: true, message: 'Staff login successful.' };
     }
 
-    this.saveSession(session);
-    this.restaurantService.showToast(`Welcome back, ${session.name}! Access granted.`, 'success');
-    return { success: true, message: 'Login successful' };
+    return {
+      success: false,
+      message: 'Invalid credentials. Check username & password or click 1-Click Staff Post buttons below.'
+    };
   }
 
-  quickLogin(role: 'admin' | 'manager' | 'hostess'): void {
-    const acc = this.validAccounts.find(a => a.role === role) || this.validAccounts[0];
+  quickStaffLogin(postKey: 'admin' | 'manager' | 'hostess' | 'chef'): void {
+    const acc = this.staffPosts.find(a => a.postKey === postKey) || this.staffPosts[0];
     const session: UserSession = {
       username: acc.username,
       name: acc.name,
-      role: acc.role,
-      roleLabel: acc.roleLabel,
+      userType: 'staff',
+      role: acc.postKey,
+      roleLabel: acc.postTitle,
+      postTitle: acc.postTitle,
       avatar: acc.avatar,
       loginTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     this.saveSession(session);
-    this.restaurantService.showToast(`Logged in as ${session.name} (${session.roleLabel})`, 'success');
+    this.restaurantService.showToast(`Staff Station Online: ${session.name} (${session.postTitle})`, 'success');
     this.router.navigate(['/']);
   }
 
@@ -145,7 +227,7 @@ export class AuthService {
     }
     this.currentUserSubject.next(null);
     if (current) {
-      this.restaurantService.showToast(`Goodbye ${current.name}, you have been signed out.`, 'info');
+      this.restaurantService.showToast(`You have been signed out. Thank you for visiting!`, 'info');
     }
     this.router.navigate(['/login']);
   }

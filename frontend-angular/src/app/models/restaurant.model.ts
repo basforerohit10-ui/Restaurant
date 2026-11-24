@@ -71,3 +71,27 @@ export interface ToastNotification {
   type: 'success' | 'info' | 'warning' | 'error';
   message: string;
 }
+
+export interface DishReview {
+  id: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  category: 'starters' | 'mains' | 'desserts' | 'beverages' | 'specials';
+  price: number;
+  description: string;
+  imageUrl: string;
+  isVeg: boolean;
+  isSpicy?: boolean;
+  isChefSpecial?: boolean;
+  prepTime: string;
+  rating: number;
+  reviews: DishReview[];
+}
+

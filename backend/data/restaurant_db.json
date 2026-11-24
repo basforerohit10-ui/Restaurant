@@ -43,8 +43,8 @@
       "section": "main",
       "capacity": 2,
       "shape": "round",
-      "status": "available",
-      "currentReservationId": null,
+      "status": "occupied",
+      "currentReservationId": "RES-5521",
       "x": 30,
       "y": 20
     },
@@ -153,7 +153,7 @@
       "section": "patio",
       "capacity": 4,
       "shape": "square",
-      "status": "reserved",
+      "status": "occupied",
       "currentReservationId": "RES-1101",
       "x": 75,
       "y": 25
@@ -314,7 +314,7 @@
       "time": "19:00",
       "occasion": "Birthday Celebration",
       "specialRequests": "",
-      "status": "confirmed",
+      "status": "seated",
       "source": "Web App",
       "createdAt": "2026-11-24T13:27:51.101Z"
     },
@@ -324,12 +324,12 @@
       "phone": "743",
       "email": "",
       "partySize": 2,
-      "tableId": null,
+      "tableId": "T-102",
       "date": "2026-11-24",
       "time": "19:00",
       "occasion": "Casual Dining",
       "specialRequests": "",
-      "status": "confirmed",
+      "status": "seated",
       "source": "Web App",
       "createdAt": "2026-11-24T13:27:05.523Z"
     },

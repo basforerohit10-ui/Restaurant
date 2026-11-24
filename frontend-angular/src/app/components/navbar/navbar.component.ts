@@ -18,7 +18,7 @@ import { RestaurantService } from '../../services/restaurant.service';
           <div class="brand-meta">
             <span class="edition-pill">ANGULAR 18 EDITION</span>
             <span class="dot-sep">•</span>
-            <span class="sub-label">FINE DINING FLOOR CONTROL</span>
+            <span class="sub-label">WHITE &amp; CHOCOLATE FINE DINING</span>
           </div>
         </div>
       </div>
@@ -53,10 +53,8 @@ import { RestaurantService } from '../../services/restaurant.service';
   styles: [`
     .navbar {
       height: 76px;
-      background: rgba(13, 18, 31, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: #26140b;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -64,7 +62,7 @@ import { RestaurantService } from '../../services/restaurant.service';
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 20px rgba(38, 20, 11, 0.35);
     }
 
     .brand {
@@ -77,8 +75,8 @@ import { RestaurantService } from '../../services/restaurant.service';
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+      background: linear-gradient(135deg, #d97706, #92400e);
+      box-shadow: 0 0 16px rgba(217, 119, 6, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -92,7 +90,7 @@ import { RestaurantService } from '../../services/restaurant.service';
       font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      color: #ffffff;
+      color: #fffbf7;
       line-height: 1.1;
     }
 
@@ -114,21 +112,21 @@ import { RestaurantService } from '../../services/restaurant.service';
       font-size: 0.65rem;
       font-weight: 800;
       color: #fbbf24;
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.35);
       padding: 1px 6px;
       border-radius: 4px;
       letter-spacing: 0.04em;
     }
 
     .dot-sep {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.3);
       font-size: 0.7rem;
     }
 
     .sub-label {
       font-size: 0.68rem;
-      color: #94a3b8;
+      color: #d4beaf;
       font-weight: 600;
       letter-spacing: 0.06em;
     }
@@ -147,12 +145,12 @@ import { RestaurantService } from '../../services/restaurant.service';
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(20, 27, 45, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       padding: 6px 14px;
       border-radius: 9999px;
       font-size: 0.8rem;
-      color: #cbd5e1;
+      color: #fdfaf6;
       font-weight: 500;
     }
 
@@ -167,15 +165,15 @@ import { RestaurantService } from '../../services/restaurant.service';
     }
 
     .backend-pill.online .pulse-dot {
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
+      background: #34d399;
+      box-shadow: 0 0 10px #34d399;
       animation: pulseGreen 2s infinite;
     }
 
     .backend-pill.online {
-      border-color: rgba(16, 185, 129, 0.25);
-      background: rgba(16, 185, 129, 0.08);
-      color: #6ee7b7;
+      border-color: rgba(52, 211, 153, 0.35);
+      background: rgba(16, 185, 129, 0.15);
+      color: #a7f3d0;
     }
 
     .highlight-val {
@@ -198,9 +196,9 @@ import { RestaurantService } from '../../services/restaurant.service';
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fffbf7;
       padding: 8px 16px;
       border-radius: 10px;
       font-size: 0.84rem;
@@ -210,8 +208,8 @@ import { RestaurantService } from '../../services/restaurant.service';
     }
 
     .btn-reset:hover {
-      background: rgba(245, 158, 11, 0.12);
-      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.25);
+      border-color: #fbbf24;
       color: #fbbf24;
       transform: translateY(-1px);
     }

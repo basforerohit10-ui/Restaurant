@@ -20,13 +20,13 @@ interface ArrayMethodDemo {
       <!-- Header -->
       <div class="page-header">
         <div>
-          <span class="sub-header">OPERATIONAL ANALYTICS &amp; DATA STRUCTURES</span>
+          <span class="sub-header">OPERATIONAL ANALYTICS • WHITE &amp; CHOCOLATE</span>
           <h2>Floor Analytics &amp; Array Operations Studio</h2>
           <p>Real-time dining room metrics computed via pure TypeScript array methods: filter, map, reduce, find, and sort.</p>
         </div>
       </div>
 
-      <!-- Area Breakdown Card -->
+      <!-- Area Breakdown Card in White -->
       <div class="glass-card">
         <div class="card-head">
           <span class="card-tag">FLOOR METRICS</span>
@@ -46,7 +46,7 @@ interface ArrayMethodDemo {
         </div>
       </div>
 
-      <!-- Interactive Array Operations Studio for Teacher Evaluation -->
+      <!-- Interactive Array Operations Studio in Chocolate IDE Box -->
       <div class="glass-card studio-card">
         <div class="studio-header">
           <div>
@@ -90,7 +90,7 @@ interface ArrayMethodDemo {
         </div>
       </div>
 
-      <!-- Academic Summary Table -->
+      <!-- Academic Summary Table in White Card -->
       <div class="glass-card">
         <div class="card-head">
           <span class="card-tag">THEORETICAL REFERENCE</span>
@@ -156,7 +156,7 @@ interface ArrayMethodDemo {
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.12em;
-      color: #fbbf24;
+      color: #8c4f2e;
       display: block;
       margin-bottom: 4px;
     }
@@ -164,32 +164,32 @@ interface ArrayMethodDemo {
       margin: 0 0 4px;
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.85rem;
-      color: #ffffff;
+      color: #231208;
     }
     .page-header p {
       margin: 0;
-      color: #94a3b8;
+      color: #7d5b45;
       font-size: 0.92rem;
     }
 
     .glass-card {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 18px;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
     }
     .card-head { display: flex; flex-direction: column; gap: 2px; }
-    .card-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: #fbbf24; }
-    .card-head h3 { margin: 0; color: #ffffff; font-size: 1.2rem; }
+    .card-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: #8c4f2e; }
+    .card-head h3 { margin: 0; color: #231208; font-size: 1.2rem; }
 
     .bars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
     .bar-item {
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.08);
       padding: 14px;
       border-radius: 12px;
       display: flex;
@@ -197,16 +197,18 @@ interface ArrayMethodDemo {
       gap: 8px;
     }
     .bar-head { display: flex; justify-content: space-between; font-size: 0.88rem; }
-    .sec-name { color: #ffffff; font-weight: 600; }
-    .sec-pct { color: #fbbf24; }
-    .progress-track { height: 8px; background: rgba(255, 255, 255, 0.08); border-radius: 9999px; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #fbbf24); border-radius: 9999px; }
-    .sub-count { font-size: 0.75rem; color: #94a3b8; }
+    .sec-name { color: #231208; font-weight: 700; }
+    .sec-pct { color: #8c4f2e; font-weight: 700; }
+    .progress-track { height: 8px; background: #ebd2be; border-radius: 9999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #8c4f2e, #522d1a); border-radius: 9999px; }
+    .sub-count { font-size: 0.75rem; color: #7d5b45; }
 
-    /* Studio Workbench */
+    /* Studio Workbench in Rich Dark Chocolate */
     .studio-card {
-      border-color: rgba(245, 158, 11, 0.25);
-      background: linear-gradient(145deg, rgba(20, 27, 45, 0.8), rgba(13, 18, 31, 0.9));
+      background: linear-gradient(145deg, #2c170d, #1a0e08);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fffbf7;
+      box-shadow: 0 10px 30px rgba(31, 15, 8, 0.3);
     }
     .studio-header {
       display: flex;
@@ -214,12 +216,12 @@ interface ArrayMethodDemo {
       align-items: flex-start;
     }
     .studio-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: #fbbf24; }
-    .studio-header h3 { margin: 2px 0 4px; color: #ffffff; font-size: 1.3rem; }
-    .studio-header p { margin: 0; color: #94a3b8; font-size: 0.85rem; }
+    .studio-header h3 { margin: 2px 0 4px; color: #fffbf7; font-size: 1.3rem; }
+    .studio-header p { margin: 0; color: #d6bfb0; font-size: 0.85rem; }
     .badge-ts {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid #fbbf24;
+      color: #fbbf24;
       font-size: 0.72rem;
       padding: 4px 10px;
       border-radius: 9999px;
@@ -228,9 +230,9 @@ interface ArrayMethodDemo {
 
     .method-pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .method-btn {
-      background: rgba(13, 18, 31, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #d6bfb0;
       padding: 8px 14px;
       border-radius: 8px;
       font-size: 0.84rem;
@@ -238,19 +240,19 @@ interface ArrayMethodDemo {
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .method-btn:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.25); }
+    .method-btn:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
     .method-btn.active {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+      background: linear-gradient(135deg, #d97706, #b45309);
       border-color: #f59e0b;
-      color: #0f172a;
-      box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
     }
 
     .code-workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 900px) { .code-workspace { grid-template-columns: 1fr; } }
 
     .code-box, .output-box {
-      background: #080c14;
+      background: #140b06;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       padding: 14px;
@@ -263,11 +265,11 @@ interface ArrayMethodDemo {
       justify-content: space-between;
       align-items: center;
       font-size: 0.72rem;
-      color: #64748b;
+      color: #a37c63;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 6px;
     }
     .method-name { color: #fbbf24; }
@@ -278,40 +280,40 @@ interface ArrayMethodDemo {
       overflow-x: auto;
       font-family: 'Fira Code', 'Cascadia Code', monospace;
       font-size: 0.84rem;
-      color: #34d399;
+      color: #4ade80;
       line-height: 1.5;
     }
-    .json-output { color: #38bdf8; max-height: 220px; overflow-y: auto; }
+    .json-output { color: #7dd3fc; max-height: 220px; overflow-y: auto; }
     .explanation {
       margin: 0;
       font-size: 0.8rem;
-      color: #cbd5e1;
-      background: rgba(20, 27, 45, 0.6);
+      color: #e2ad8e;
+      background: rgba(255, 255, 255, 0.05);
       padding: 8px 12px;
       border-radius: 6px;
       line-height: 1.45;
     }
 
-    /* Table */
+    /* Academic Table */
     .table-responsive { overflow-x: auto; }
     .academic-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
     .academic-table th {
-      background: rgba(13, 18, 31, 0.7);
-      color: #94a3b8;
+      background: #faf7f2;
+      color: #573926;
       padding: 12px 16px;
-      font-weight: 700;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 800;
+      border-bottom: 2px solid rgba(74, 40, 22, 0.12);
     }
     .academic-table td {
       padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      color: #ffffff;
+      border-bottom: 1px solid rgba(74, 40, 22, 0.08);
+      color: #231208;
     }
-    .academic-table code { color: #fbbf24; font-family: monospace; font-size: 0.85rem; }
+    .academic-table code { color: #8c4f2e; font-family: monospace; font-size: 0.85rem; font-weight: 700; }
     .tag-pure {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
       padding: 3px 10px;
       border-radius: 4px;
       font-size: 0.75rem;

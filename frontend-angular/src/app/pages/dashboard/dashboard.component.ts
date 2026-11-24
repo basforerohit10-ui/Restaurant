@@ -10,10 +10,10 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="dashboard-page">
-      <!-- Luxury Welcome Banner -->
+      <!-- Luxury Chocolate & Ivory Welcome Banner -->
       <div class="hero-banner">
         <div class="banner-content">
-          <div class="banner-tag">FINE DINING OPERATIONAL SUITE</div>
+          <div class="banner-tag">FINE DINING OPERATIONAL SUITE • WHITE &amp; CHOCOLATE</div>
           <h2>Floor Control &amp; Seating Analytics</h2>
           <p>Real-time dining room occupancy, reservations intake timeline, and walk-in queue management.</p>
         </div>
@@ -23,7 +23,7 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- 4 High-Impact KPI Glass Cards -->
+      <!-- 4 High-Impact White & Chocolate KPI Cards -->
       <div class="metrics-grid">
         <!-- Metric 1: Occupancy -->
         <div class="kpi-card gold-kpi">
@@ -153,18 +153,18 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       gap: 24px;
     }
 
-    /* Hero Banner */
+    /* Hero Banner: Warm Chocolate Background */
     .hero-banner {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.95)),
-                  radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.15), transparent 50%);
-      border: 1px solid rgba(245, 158, 11, 0.25);
+      background: linear-gradient(135deg, #361b0f, #201008);
+      border: 1px solid rgba(245, 158, 11, 0.3);
       border-radius: 20px;
-      padding: 2rem 2.5rem;
+      padding: 2.2rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(32, 16, 8, 0.35);
+      color: #ffffff;
     }
     @media (max-width: 900px) {
       .hero-banner { flex-direction: column; align-items: flex-start; }
@@ -180,14 +180,14 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     .hero-banner h2 {
       margin: 0 0 6px;
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.85rem;
+      font-size: 1.95rem;
       font-weight: 700;
-      color: #ffffff;
+      color: #fffbf7;
       letter-spacing: 0.02em;
     }
     .hero-banner p {
       margin: 0;
-      color: #94a3b8;
+      color: #d6bfb0;
       font-size: 0.95rem;
       max-width: 600px;
     }
@@ -199,36 +199,35 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
     .btn-hero-primary {
       background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      color: #1a0e08;
       text-decoration: none;
       font-weight: 700;
       font-size: 0.88rem;
-      padding: 10px 20px;
+      padding: 11px 22px;
       border-radius: 10px;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
       transition: all 0.2s ease;
     }
     .btn-hero-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
     }
     .btn-hero-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fffbf7;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.88rem;
-      padding: 10px 18px;
+      padding: 11px 20px;
       border-radius: 10px;
       transition: all 0.2s ease;
     }
     .btn-hero-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.18);
     }
 
-    /* KPI Cards */
+    /* KPI Cards in Crisp White */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -236,22 +235,20 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
 
     .kpi-card {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 18px;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       position: relative;
-      overflow: hidden;
     }
     .kpi-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 28px rgba(35, 18, 8, 0.1);
     }
 
     .kpi-top {
@@ -263,21 +260,21 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.08em;
-      color: #94a3b8;
+      color: #7d5b45;
     }
     .kpi-icon-box {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
-    .gold-icon { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
-    .emerald-icon { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
-    .sky-icon { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
-    .purple-icon { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); }
+    .gold-icon { background: #fef3c7; border: 1px solid #fde68a; }
+    .emerald-icon { background: #dcfce7; border: 1px solid #bbf7d0; }
+    .sky-icon { background: #e0f2fe; border: 1px solid #bae6fd; }
+    .purple-icon { background: #fae8ff; border: 1px solid #f5d0fe; }
 
     .kpi-main {
       display: flex;
@@ -286,14 +283,14 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
     .kpi-main h3 {
       margin: 0;
-      font-size: 2.1rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      color: #ffffff;
+      color: #1a0e08;
       line-height: 1;
     }
-    .emerald-num { color: #34d399 !important; }
-    .sky-num { color: #38bdf8 !important; }
-    .purple-num { color: #c084fc !important; }
+    .emerald-num { color: #15803d !important; }
+    .sky-num { color: #0369a1 !important; }
+    .purple-num { color: #7e22ce !important; }
 
     .trend-pill {
       font-size: 0.72rem;
@@ -301,31 +298,31 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       padding: 3px 8px;
       border-radius: 9999px;
     }
-    .gold-trend { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .emerald-trend { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .sky-trend { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .purple-trend { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .gold-trend { background: #fef3c7; color: #b45309; }
+    .emerald-trend { background: #dcfce7; color: #15803d; }
+    .sky-trend { background: #e0f2fe; color: #0369a1; }
+    .purple-trend { background: #fae8ff; color: #7e22ce; }
 
     .progress-bar {
       height: 6px;
-      background: rgba(255, 255, 255, 0.08);
+      background: #f1e9df;
       border-radius: 9999px;
       overflow: hidden;
       margin-top: 4px;
     }
     .progress-fill { height: 100%; border-radius: 9999px; }
-    .gold-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-    .emerald-fill { background: linear-gradient(90deg, #10b981, #34d399); }
+    .gold-fill { background: linear-gradient(90deg, #d97706, #f59e0b); }
+    .emerald-fill { background: linear-gradient(90deg, #15803d, #22c55e); }
     .sky-fill { background: linear-gradient(90deg, #0284c7, #38bdf8); }
-    .purple-fill { background: linear-gradient(90deg, #9333ea, #c084fc); }
+    .purple-fill { background: linear-gradient(90deg, #7e22ce, #a855f7); }
 
     .kpi-sub {
       font-size: 0.75rem;
-      color: #64748b;
+      color: #8c6d58;
       font-weight: 500;
     }
 
-    /* Content Split */
+    /* Content Split Panels in Crisp White */
     .content-split {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -336,14 +333,14 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
 
     .panel {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 20px;
       padding: 1.6rem;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.05);
     }
 
     .panel-header {
@@ -353,17 +350,17 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
     .panel-header h3 {
       margin: 0 0 2px;
-      color: #ffffff;
+      color: #231208;
       font-size: 1.15rem;
       font-weight: 700;
     }
     .panel-sub {
       margin: 0;
-      color: #94a3b8;
-      font-size: 0.8rem;
+      color: #7d5b45;
+      font-size: 0.82rem;
     }
     .link-more {
-      color: #fbbf24;
+      color: #8c4f2e;
       text-decoration: none;
       font-size: 0.82rem;
       font-weight: 700;
@@ -371,7 +368,7 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     }
     .link-more:hover {
       text-decoration: underline;
-      color: #fde047;
+      color: #522d1a;
     }
 
     /* Reservations List Feed */
@@ -385,23 +382,22 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       align-items: center;
       gap: 14px;
       padding: 12px 14px;
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.08);
       border-radius: 12px;
       transition: all 0.15s ease;
     }
     .res-item:hover {
-      background: rgba(26, 36, 60, 0.6);
-      border-color: rgba(255, 255, 255, 0.12);
+      background: #f4ece1;
     }
 
     .time-badge {
       display: flex;
       align-items: center;
       gap: 4px;
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.25);
-      color: #fbbf24;
+      background: #fbf0e4;
+      border: 1px solid #ebd2be;
+      color: #8c4f2e;
       font-weight: 700;
       font-size: 0.82rem;
       padding: 6px 10px;
@@ -422,20 +418,20 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       gap: 8px;
     }
     .guest-name-row strong {
-      color: #ffffff;
+      color: #231208;
       font-size: 0.92rem;
     }
     .occasion-tag {
       font-size: 0.68rem;
-      background: rgba(244, 63, 94, 0.15);
-      color: #fb7185;
+      background: #ffe4e6;
+      color: #be123c;
       padding: 1px 6px;
       border-radius: 4px;
       font-weight: 600;
     }
     .guest-meta {
       font-size: 0.78rem;
-      color: #94a3b8;
+      color: #7d5b45;
     }
 
     .status-pill {
@@ -445,9 +441,9 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       border-radius: 9999px;
       letter-spacing: 0.04em;
     }
-    .status-pill.seated { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .status-pill.confirmed { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .status-pill.pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-pill.seated { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-pill.confirmed { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .status-pill.pending { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
     /* Tables Preview Chips */
     .tables-preview {
@@ -456,8 +452,8 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       gap: 10px;
     }
     .table-chip {
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
       border-radius: 12px;
       padding: 10px 12px;
       display: flex;
@@ -468,9 +464,9 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
     .table-chip:hover {
       transform: scale(1.03);
     }
-    .table-chip.available { border-color: rgba(16, 185, 129, 0.3); }
-    .table-chip.occupied { border-color: rgba(244, 63, 94, 0.35); background: rgba(244, 63, 94, 0.05); }
-    .table-chip.reserved { border-color: rgba(245, 158, 11, 0.35); background: rgba(245, 158, 11, 0.05); }
+    .table-chip.available { border-color: #86efac; }
+    .table-chip.occupied { border-color: #fca5a5; background: #fff1f2; }
+    .table-chip.reserved { border-color: #fde047; background: #fefce8; }
 
     .chip-top {
       display: flex;
@@ -478,29 +474,29 @@ import { RestaurantMetrics } from '../../models/restaurant.model';
       align-items: center;
     }
     .chip-top strong {
-      color: #ffffff;
+      color: #231208;
       font-size: 0.95rem;
     }
     .chip-status-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
     }
-    .table-chip.available .chip-status-dot { background: #10b981; box-shadow: 0 0 6px #10b981; }
-    .table-chip.occupied .chip-status-dot { background: #f43f5e; box-shadow: 0 0 6px #f43f5e; }
-    .table-chip.reserved .chip-status-dot { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+    .table-chip.available .chip-status-dot { background: #16a34a; }
+    .table-chip.occupied .chip-status-dot { background: #e11d48; }
+    .table-chip.reserved .chip-status-dot { background: #d97706; }
 
     .chip-seats {
       font-size: 0.72rem;
-      color: #94a3b8;
+      color: #7d5b45;
     }
     .chip-status {
       font-size: 0.7rem;
       font-weight: 700;
     }
-    .table-chip.available .chip-status { color: #34d399; }
-    .table-chip.occupied .chip-status { color: #fb7185; }
-    .table-chip.reserved .chip-status { color: #fbbf24; }
+    .table-chip.available .chip-status { color: #15803d; }
+    .table-chip.occupied .chip-status { color: #be123c; }
+    .table-chip.reserved .chip-status { color: #b45309; }
   `]
 })
 export class DashboardComponent {

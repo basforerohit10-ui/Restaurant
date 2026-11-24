@@ -12,7 +12,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
       <!-- Page Header -->
       <div class="page-header">
         <div>
-          <span class="sub-header">ARCHITECTURAL FLOOR CONTROL</span>
+          <span class="sub-header">FLOOR MATRIX • WHITE &amp; CHOCOLATE</span>
           <h2>Dining Floor Layout &amp; Table Matrix</h2>
           <p>Real-time visual table statuses, seating capacities, and turn-time floor allocations.</p>
         </div>
@@ -24,7 +24,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Controls & Filter Toolbar -->
+      <!-- Controls & Filter Toolbar in White -->
       <div class="toolbar-card">
         <!-- Section Filter -->
         <div class="filter-group">
@@ -78,7 +78,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
             </span>
           </div>
 
-          <!-- Realistic Table Visualizer with Chairs -->
+          <!-- Realistic Chocolate Walnut Table Visualizer with Chairs -->
           <div class="table-stage">
             <div class="furniture-assembly" [class]="t.shape" [class]="t.status">
               <!-- Chairs around table -->
@@ -89,7 +89,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
               <div class="chair top-left" *ngIf="t.capacity >= 6"></div>
               <div class="chair top-right" *ngIf="t.capacity >= 6"></div>
 
-              <!-- Main Table Center Top -->
+              <!-- Main Table Center Top in Polished Chocolate Wood -->
               <div class="table-plate">
                 <span class="plate-num">T-{{ t.number }}</span>
                 <span class="plate-seats">👥 {{ t.capacity }} Seats</span>
@@ -143,7 +143,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Table Detail Modal -->
+      <!-- Table Detail Modal in White Card -->
       <div class="modal-backdrop" *ngIf="selectedTable" (click)="selectedTable = null">
         <div class="modal-card" (click)="$event.stopPropagation()">
           <div class="modal-head">
@@ -187,7 +187,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
               <p *ngIf="res.specialRequests" class="special-req">"{{ res.specialRequests }}"</p>
             </div>
 
-            <!-- Modal Action Buttons -->
+            <!-- Modal Action Buttons in Warm Chocolate/Emerald -->
             <div class="modal-actions-list">
               <button
                 class="modal-act-btn seat-btn"
@@ -235,7 +235,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.12em;
-      color: #fbbf24;
+      color: #8c4f2e;
       display: block;
       margin-bottom: 4px;
     }
@@ -243,11 +243,11 @@ import { Table, Reservation } from '../../models/restaurant.model';
       margin: 0 0 4px;
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.85rem;
-      color: #ffffff;
+      color: #231208;
     }
     .page-header p {
       margin: 0;
-      color: #94a3b8;
+      color: #7d5b45;
       font-size: 0.92rem;
     }
 
@@ -261,35 +261,36 @@ import { Table, Reservation } from '../../models/restaurant.model';
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(20, 27, 45, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 6px 12px;
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      padding: 6px 14px;
       border-radius: 9999px;
       font-size: 0.75rem;
-      font-weight: 600;
-      color: #cbd5e1;
+      font-weight: 700;
+      color: #573926;
+      box-shadow: 0 2px 6px rgba(35, 18, 8, 0.04);
     }
     .legend-pill .dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
     }
-    .legend-pill.available .dot { background: #10b981; box-shadow: 0 0 6px #10b981; }
-    .legend-pill.occupied .dot { background: #f43f5e; box-shadow: 0 0 6px #f43f5e; }
-    .legend-pill.reserved .dot { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
-    .legend-pill.maintenance .dot { background: #64748b; box-shadow: 0 0 6px #64748b; }
+    .legend-pill.available .dot { background: #16a34a; }
+    .legend-pill.occupied .dot { background: #e11d48; }
+    .legend-pill.reserved .dot { background: #d97706; }
+    .legend-pill.maintenance .dot { background: #78716c; }
 
-    /* Toolbar Card */
+    /* Toolbar Card in White */
     .toolbar-card {
-      background: rgba(20, 27, 45, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 16px;
       padding: 14px 20px;
       display: flex;
       align-items: center;
       gap: 24px;
       flex-wrap: wrap;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
     }
     .filter-group {
       display: flex;
@@ -301,7 +302,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.08em;
-      color: #64748b;
+      color: #8c6d58;
     }
     .pills-container {
       display: flex;
@@ -309,31 +310,30 @@ import { Table, Reservation } from '../../models/restaurant.model';
       flex-wrap: wrap;
     }
     .pill-button {
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #94a3b8;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
+      color: #634029;
       padding: 7px 14px;
       border-radius: 8px;
       font-size: 0.82rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .pill-button:hover {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.2);
+      background: #f4ece1;
+      color: #231208;
     }
     .pill-button.active {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
-      border-color: #f59e0b;
-      font-weight: 700;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
+      border-color: #26140b;
+      box-shadow: 0 2px 8px rgba(38, 20, 11, 0.25);
     }
     .divider-v {
       width: 1px;
       height: 28px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(74, 40, 22, 0.12);
     }
     @media (max-width: 900px) {
       .divider-v { display: none; }
@@ -347,28 +347,28 @@ import { Table, Reservation } from '../../models/restaurant.model';
     }
 
     .table-card {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 18px;
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 14px;
       cursor: pointer;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
     }
     .table-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.22);
-      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 10px 28px rgba(35, 18, 8, 0.1);
+      border-color: rgba(74, 40, 22, 0.25);
     }
 
-    .table-card.available { border-top: 3px solid #10b981; }
-    .table-card.occupied { border-top: 3px solid #f43f5e; }
-    .table-card.reserved { border-top: 3px solid #f59e0b; }
-    .table-card.maintenance { border-top: 3px solid #64748b; }
+    .table-card.available { border-top: 4px solid #16a34a; }
+    .table-card.occupied { border-top: 4px solid #e11d48; }
+    .table-card.reserved { border-top: 4px solid #d97706; }
+    .table-card.maintenance { border-top: 4px solid #78716c; }
 
     .card-head {
       display: flex;
@@ -380,8 +380,8 @@ import { Table, Reservation } from '../../models/restaurant.model';
       align-items: baseline;
       gap: 2px;
     }
-    .tag-hash { color: #f59e0b; font-weight: 800; font-size: 0.9rem; }
-    .tag-num { color: #ffffff; font-weight: 800; font-size: 1.25rem; }
+    .tag-hash { color: #8c4f2e; font-weight: 800; font-size: 0.9rem; }
+    .tag-num { color: #231208; font-weight: 800; font-size: 1.25rem; }
 
     .status-badge {
       font-size: 0.68rem;
@@ -390,20 +390,21 @@ import { Table, Reservation } from '../../models/restaurant.model';
       border-radius: 9999px;
       letter-spacing: 0.05em;
     }
-    .status-badge.available { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .status-badge.occupied { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .status-badge.reserved { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .status-badge.maintenance { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+    .status-badge.available { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-badge.occupied { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+    .status-badge.reserved { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .status-badge.maintenance { background: #f5f5f4; color: #57534e; border: 1px solid #e7e5e4; }
 
-    /* Furniture Assembly & Chairs */
+    /* Furniture Assembly & Chairs in Chocolate Wood */
     .table-stage {
       height: 120px;
-      background: rgba(13, 18, 31, 0.5);
+      background: #faf7f2;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      border: 1px dashed rgba(74, 40, 22, 0.1);
     }
 
     .furniture-assembly {
@@ -420,9 +421,10 @@ import { Table, Reservation } from '../../models/restaurant.model';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #1a233a;
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #4a2818, #2a150b);
+      color: #fffbf7;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(38, 20, 11, 0.25);
       transition: all 0.2s ease;
     }
 
@@ -443,35 +445,32 @@ import { Table, Reservation } from '../../models/restaurant.model';
     }
 
     .furniture-assembly.available .table-plate {
-      border-color: rgba(16, 185, 129, 0.5);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #162035);
+      border-color: #4ade80;
     }
     .furniture-assembly.occupied .table-plate {
-      border-color: rgba(244, 63, 94, 0.5);
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.15), #162035);
+      border-color: #fb7185;
     }
     .furniture-assembly.reserved .table-plate {
-      border-color: rgba(245, 158, 11, 0.5);
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), #162035);
+      border-color: #facc15;
     }
 
     .plate-num {
       font-size: 0.95rem;
       font-weight: 800;
-      color: #ffffff;
+      color: #fffbf7;
     }
     .plate-seats {
       font-size: 0.68rem;
-      color: #94a3b8;
+      color: #fde68a;
       font-weight: 600;
     }
 
-    /* Decorative Chairs */
+    /* Decorative Wooden Chairs */
     .chair {
       position: absolute;
       width: 14px;
       height: 8px;
-      background: #334155;
+      background: #78350f;
       border-radius: 3px;
       z-index: 1;
     }
@@ -482,32 +481,32 @@ import { Table, Reservation } from '../../models/restaurant.model';
     .chair.top-left { top: -11px; left: 25px; }
     .chair.top-right { top: -11px; right: 25px; }
 
-    .furniture-assembly.available .chair { background: #10b981; }
-    .furniture-assembly.occupied .chair { background: #f43f5e; }
-    .furniture-assembly.reserved .chair { background: #f59e0b; }
+    .furniture-assembly.available .chair { background: #15803d; }
+    .furniture-assembly.occupied .chair { background: #be123c; }
+    .furniture-assembly.reserved .chair { background: #b45309; }
 
     /* Card Meta */
     .card-meta {
       display: flex;
       justify-content: space-between;
       font-size: 0.8rem;
-      color: #94a3b8;
+      color: #7d5b45;
     }
-    .meta-section { color: #cbd5e1; font-weight: 600; }
-    .meta-shape { color: #64748b; }
+    .meta-section { color: #231208; font-weight: 700; }
+    .meta-shape { color: #8c6d58; }
 
     /* Attached Diner Preview */
     .attached-info {
-      background: rgba(13, 18, 31, 0.6);
-      border-left: 3px solid #fbbf24;
+      background: #fbf5ee;
+      border-left: 3px solid #8c4f2e;
       padding: 6px 10px;
       border-radius: 6px;
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
-    .att-name { font-size: 0.82rem; font-weight: 700; color: #ffffff; }
-    .att-time { font-size: 0.72rem; color: #fbbf24; }
+    .att-name { font-size: 0.82rem; font-weight: 700; color: #231208; }
+    .att-time { font-size: 0.72rem; color: #8c4f2e; font-weight: 600; }
 
     /* Fast Action Buttons */
     .card-actions {
@@ -525,46 +524,43 @@ import { Table, Reservation } from '../../models/restaurant.model';
       transition: all 0.2s ease;
     }
     .btn-seat {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
     }
     .btn-seat:hover {
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 4px 12px rgba(38, 20, 11, 0.35);
     }
     .btn-free {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #16a34a, #15803d);
       color: white;
     }
     .btn-free:hover {
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
     }
 
-    /* Modal Backdrop & Glass Card */
+    /* Modal Backdrop & White Card */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 12, 20, 0.82);
+      background: rgba(31, 15, 8, 0.65);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2000;
       padding: 20px;
-      animation: fadeIn 0.2s ease;
     }
     .modal-card {
-      background: #141b2d;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.15);
       border-radius: 20px;
       width: 480px;
       max-width: 100%;
-      padding: 1.75rem;
+      padding: 1.85rem;
       display: flex;
       flex-direction: column;
       gap: 18px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      animation: popUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 50px rgba(31, 15, 8, 0.3);
     }
 
     .modal-head {
@@ -576,18 +572,18 @@ import { Table, Reservation } from '../../models/restaurant.model';
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.1em;
-      color: #fbbf24;
+      color: #8c4f2e;
     }
     .modal-title-group h3 {
       margin: 2px 0 0;
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.4rem;
-      color: #ffffff;
+      font-size: 1.45rem;
+      color: #231208;
     }
     .modal-close {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #94a3b8;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      color: #7d5b45;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -598,7 +594,7 @@ import { Table, Reservation } from '../../models/restaurant.model';
       justify-content: center;
       line-height: 1;
     }
-    .modal-close:hover { color: #ffffff; background: rgba(255, 255, 255, 0.12); }
+    .modal-close:hover { color: #231208; background: #f4ece1; }
 
     .modal-body { display: flex; flex-direction: column; gap: 14px; }
 
@@ -608,8 +604,8 @@ import { Table, Reservation } from '../../models/restaurant.model';
       gap: 10px;
     }
     .modal-stat-pill {
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
       border-radius: 10px;
       padding: 8px 12px;
       text-align: center;
@@ -617,8 +613,8 @@ import { Table, Reservation } from '../../models/restaurant.model';
       flex-direction: column;
       gap: 2px;
     }
-    .stat-lbl { font-size: 0.65rem; color: #64748b; text-transform: uppercase; font-weight: 700; }
-    .modal-stat-pill strong { font-size: 0.88rem; color: #f8fafc; }
+    .stat-lbl { font-size: 0.65rem; color: #8c6d58; text-transform: uppercase; font-weight: 800; }
+    .modal-stat-pill strong { font-size: 0.88rem; color: #231208; }
 
     .current-status-banner {
       padding: 10px 14px;
@@ -629,14 +625,14 @@ import { Table, Reservation } from '../../models/restaurant.model';
       font-size: 0.85rem;
       font-weight: 700;
     }
-    .current-status-banner.available { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .current-status-banner.occupied { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .current-status-banner.reserved { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .current-status-banner.maintenance { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+    .current-status-banner.available { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .current-status-banner.occupied { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+    .current-status-banner.reserved { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .current-status-banner.maintenance { background: #f5f5f4; color: #57534e; border: 1px solid #e7e5e4; }
 
     .linked-booking-box {
-      background: rgba(13, 18, 31, 0.7);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: #fbf5ee;
+      border: 1px solid rgba(140, 79, 46, 0.25);
       border-radius: 12px;
       padding: 12px 14px;
       display: flex;
@@ -648,26 +644,27 @@ import { Table, Reservation } from '../../models/restaurant.model';
       justify-content: space-between;
       align-items: center;
       font-size: 0.68rem;
-      color: #fbbf24;
+      color: #8c4f2e;
       font-weight: 800;
       letter-spacing: 0.05em;
     }
     .time-pill {
-      background: rgba(245, 158, 11, 0.18);
+      background: #ebd2be;
       padding: 2px 6px;
       border-radius: 4px;
+      color: #3b2012;
     }
     .linked-booking-box h4 {
       margin: 2px 0 0;
-      color: #ffffff;
+      color: #231208;
       font-size: 1.05rem;
     }
     .linked-booking-box p {
       margin: 0;
-      font-size: 0.8rem;
-      color: #94a3b8;
+      font-size: 0.82rem;
+      color: #573926;
     }
-    .special-req { color: #fb7185 !important; font-style: italic; }
+    .special-req { color: #be123c !important; font-style: italic; }
 
     .modal-actions-list {
       display: flex;
@@ -685,25 +682,16 @@ import { Table, Reservation } from '../../models/restaurant.model';
       transition: all 0.15s ease;
     }
     .seat-btn {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
     }
     .free-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #16a34a, #15803d);
       color: #ffffff;
     }
     .maint-btn {
-      background: #334155;
-      color: #cbd5e1;
-    }
-
-    @keyframes popUp {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      background: #e7e5e4;
+      color: #44403c;
     }
   `]
 })

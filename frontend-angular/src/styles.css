@@ -1,39 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 :root {
-  --bg-deep: #080c14;
-  --bg-base: #0d121f;
-  --bg-surface: #141b2d;
-  --bg-surface-hover: #1c253d;
-  --bg-glass: rgba(20, 27, 45, 0.72);
-  --bg-glass-elevated: rgba(26, 36, 60, 0.85);
+  /* White & Chocolate Luxury Palette */
+  --bg-deep: #f5f0e8;
+  --bg-base: #faf7f2;
+  --bg-white: #ffffff;
+  --bg-cream: #f4ece1;
+  --bg-card: #ffffff;
 
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-light: rgba(255, 255, 255, 0.12);
-  --border-focus: rgba(245, 158, 11, 0.5);
+  --choco-950: #1a0e08;
+  --choco-900: #26140b;
+  --choco-800: #3b2012;
+  --choco-700: #522d1a;
+  --choco-600: #6e3d23;
+  --choco-500: #8c4f2e;
+  --choco-400: #ab653d;
+  --choco-300: #cb855d;
+  --choco-200: #e2ad8e;
+  --choco-100: #f4d4c1;
+  --choco-50:  #fdf5ef;
 
-  --gold-300: #fde047;
-  --gold-400: #facc15;
-  --gold-500: #eab308;
-  --gold-600: #ca8a04;
-  --amber-500: #f59e0b;
-  --rose-500: #f43f5e;
-  --emerald-500: #10b981;
-  --sky-400: #38bdf8;
-  --purple-400: #c084fc;
+  --caramel-500: #d97706;
+  --caramel-400: #f59e0b;
+  --caramel-300: #fbbf24;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-gold: #fbbf24;
+  --border-subtle: rgba(74, 40, 22, 0.08);
+  --border-light: rgba(74, 40, 22, 0.14);
+  --border-focus: #8c4f2e;
+
+  --emerald-600: #15803d;
+  --emerald-500: #16a34a;
+  --emerald-50:  #f0fdf4;
+
+  --rose-600: #be123c;
+  --rose-500: #e11d48;
+  --rose-50:  #fff1f2;
+
+  --amber-600: #b45309;
+  --amber-500: #d97706;
+  --amber-50:  #fffbeb;
+
+  --sky-600: #0284c7;
+  --sky-500: #0ea5e9;
+  --sky-50:  #f0f9ff;
+
+  --text-primary: #231208;
+  --text-secondary: #573926;
+  --text-muted: #82614a;
+  --text-light: #fdfaf6;
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
+  --shadow-sm: 0 2px 8px rgba(35, 18, 8, 0.04);
+  --shadow-md: 0 6px 18px rgba(35, 18, 8, 0.06);
+  --shadow-lg: 0 12px 32px rgba(35, 18, 8, 0.09);
+  --shadow-choco: 0 8px 24px rgba(38, 20, 11, 0.25);
 }
 
 * {
@@ -46,17 +68,16 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-deep);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.04) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(217, 119, 6, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(82, 45, 26, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(245, 240, 232, 1) 0px, transparent 50%);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar in Chocolate */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -65,14 +86,14 @@ body {
   background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: #222f4c;
+  background: #cbab93;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #33446b;
+  background: #9d7557;
 }
 
-/* App Layout */
+/* Layout */
 .app-layout {
   display: flex;
   flex-direction: column;

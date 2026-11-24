@@ -44,32 +44,30 @@ import { RestaurantService } from '../../services/restaurant.service';
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: #1e293b;
-      color: #f8fafc;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: #26140b;
+      color: #fffbf7;
       font-size: 0.88rem;
-      font-weight: 500;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
-      border-left: 4px solid #38bdf8;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(38, 20, 11, 0.35);
+      border-left: 5px solid #d97706;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left-width: 5px;
       animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
     .toast-pill.success {
-      border-left-color: #10b981;
-      background: linear-gradient(to right, rgba(16, 185, 129, 0.15), #1e293b);
+      border-left-color: #16a34a;
     }
     .toast-pill.warning {
       border-left-color: #f59e0b;
-      background: linear-gradient(to right, rgba(245, 158, 11, 0.15), #1e293b);
     }
     .toast-pill.error {
-      border-left-color: #ef4444;
-      background: linear-gradient(to right, rgba(239, 68, 68, 0.15), #1e293b);
+      border-left-color: #e11d48;
     }
     .toast-pill.info {
-      border-left-color: #38bdf8;
-      background: linear-gradient(to right, rgba(56, 189, 248, 0.15), #1e293b);
+      border-left-color: #0ea5e9;
     }
     .message {
       flex: 1;
@@ -78,14 +76,14 @@ import { RestaurantService } from '../../services/restaurant.service';
     .btn-close {
       background: transparent;
       border: none;
-      color: #94a3b8;
-      font-size: 1.2rem;
+      color: #d6bfb0;
+      font-size: 1.3rem;
       cursor: pointer;
       line-height: 1;
       padding: 0 4px;
     }
     .btn-close:hover {
-      color: #f8fafc;
+      color: #ffffff;
     }
     @keyframes slideIn {
       from {
@@ -107,4 +105,3 @@ export class ToastComponent {
     this.restaurantService.removeToast(id);
   }
 }
-

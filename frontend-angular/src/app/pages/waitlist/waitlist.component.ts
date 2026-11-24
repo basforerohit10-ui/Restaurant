@@ -12,7 +12,7 @@ import { RestaurantService } from '../../services/restaurant.service';
       <!-- Header -->
       <div class="page-header">
         <div>
-          <span class="sub-header">WALK-IN INTAKE DESK</span>
+          <span class="sub-header">WALK-IN INTAKE • WHITE &amp; CHOCOLATE</span>
           <h2>Diner Waitlist Queue</h2>
           <p>Real-time queue tracking, quoted wait times, party management, and fast table seating.</p>
         </div>
@@ -21,7 +21,7 @@ import { RestaurantService } from '../../services/restaurant.service';
         </button>
       </div>
 
-      <!-- Queue Grid -->
+      <!-- Queue Grid in White Cards -->
       <div class="queue-grid" *ngIf="(waitlist$ | async) as list">
         <div class="empty-box" *ngIf="list.length === 0">
           <div class="empty-icon">⏳</div>
@@ -60,7 +60,7 @@ import { RestaurantService } from '../../services/restaurant.service';
         </div>
       </div>
 
-      <!-- Add Walkin Modal -->
+      <!-- Add Walkin Modal in White -->
       <div class="modal-backdrop" *ngIf="isModalOpen" (click)="isModalOpen = false">
         <div class="modal-card" (click)="$event.stopPropagation()">
           <div class="modal-head">
@@ -133,7 +133,7 @@ import { RestaurantService } from '../../services/restaurant.service';
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.12em;
-      color: #fbbf24;
+      color: #8c4f2e;
       display: block;
       margin-bottom: 4px;
     }
@@ -141,32 +141,32 @@ import { RestaurantService } from '../../services/restaurant.service';
       margin: 0 0 4px;
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.85rem;
-      color: #ffffff;
+      color: #231208;
     }
     .page-header p {
       margin: 0;
-      color: #94a3b8;
+      color: #7d5b45;
       font-size: 0.92rem;
     }
 
     .btn-add-walkin {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
       border: none;
       padding: 10px 20px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 4px 14px rgba(38, 20, 11, 0.3);
       transition: all 0.2s ease;
     }
     .btn-add-walkin:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+      box-shadow: 0 6px 20px rgba(38, 20, 11, 0.45);
     }
 
-    /* Queue Grid */
+    /* Queue Grid in White Cards */
     .queue-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -174,30 +174,30 @@ import { RestaurantService } from '../../services/restaurant.service';
     }
     .empty-box {
       grid-column: 1 / -1;
-      background: rgba(20, 27, 45, 0.6);
-      border: 1px dashed rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px dashed rgba(74, 40, 22, 0.15);
       border-radius: 18px;
       padding: 3.5rem;
       text-align: center;
-      color: #94a3b8;
+      color: #7d5b45;
     }
     .empty-icon { font-size: 2.5rem; margin-bottom: 8px; }
 
     .wait-card {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 18px;
       padding: 1.35rem;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .wait-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.5);
+      border-color: rgba(74, 40, 22, 0.25);
+      box-shadow: 0 10px 28px rgba(35, 18, 8, 0.1);
     }
 
     .card-head {
@@ -209,18 +209,18 @@ import { RestaurantService } from '../../services/restaurant.service';
       width: 42px;
       height: 42px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #fffbf7;
       font-weight: 800;
       font-size: 1.15rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 2px 8px rgba(38, 20, 11, 0.3);
     }
     .party-info { flex: 1; }
-    .party-info h4 { margin: 0; color: #ffffff; font-size: 1.1rem; }
-    .party-meta { font-size: 0.78rem; color: #94a3b8; }
+    .party-info h4 { margin: 0; color: #231208; font-size: 1.1rem; }
+    .party-meta { font-size: 0.78rem; color: #7d5b45; }
 
     .time-tag {
       display: flex;
@@ -231,29 +231,29 @@ import { RestaurantService } from '../../services/restaurant.service';
     .wait-est {
       font-size: 0.78rem;
       font-weight: 800;
-      color: #fbbf24;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #b45309;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
       padding: 2px 8px;
       border-radius: 6px;
     }
-    .time-in { font-size: 0.7rem; color: #64748b; }
+    .time-in { font-size: 0.7rem; color: #8c6d58; }
 
-    .contact-strip { font-size: 0.8rem; color: #cbd5e1; }
+    .contact-strip { font-size: 0.8rem; color: #573926; }
     .notes-quote {
-      background: rgba(13, 18, 31, 0.5);
-      border-left: 3px solid #fb7185;
+      background: #faf7f2;
+      border-left: 3px solid #8c4f2e;
       padding: 6px 10px;
       border-radius: 6px;
       font-size: 0.78rem;
-      color: #cbd5e1;
+      color: #573926;
       font-style: italic;
     }
 
     .card-actions { margin-top: 4px; }
     .btn-seat-walkin {
       width: 100%;
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #16a34a, #15803d);
       color: #ffffff;
       border: none;
       padding: 10px;
@@ -261,19 +261,19 @@ import { RestaurantService } from '../../services/restaurant.service';
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
       transition: all 0.15s ease;
     }
     .btn-seat-walkin:hover {
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.4);
       transform: translateY(-1px);
     }
 
-    /* Modal Form */
+    /* Modal Form in White */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 12, 20, 0.82);
+      background: rgba(31, 15, 8, 0.65);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -282,14 +282,14 @@ import { RestaurantService } from '../../services/restaurant.service';
       padding: 20px;
     }
     .modal-card {
-      background: #141b2d;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.15);
       border-radius: 20px;
-      padding: 1.75rem;
+      padding: 1.85rem;
       width: 460px;
       max-width: 100%;
-      color: #ffffff;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      color: #231208;
+      box-shadow: 0 20px 50px rgba(31, 15, 8, 0.3);
     }
     .modal-head {
       display: flex;
@@ -301,38 +301,46 @@ import { RestaurantService } from '../../services/restaurant.service';
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.1em;
-      color: #fbbf24;
+      color: #8c4f2e;
     }
     .modal-head h3 {
       margin: 2px 0 0;
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
+      color: #231208;
     }
     .btn-close {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 1.4rem;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      color: #7d5b45;
+      font-size: 1.3rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .btn-close:hover { color: #231208; background: #f4ece1; }
 
     form { display: flex; flex-direction: column; gap: 12px; }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
-    form label { font-size: 0.78rem; font-weight: 700; color: #94a3b8; }
+    form label { font-size: 0.78rem; font-weight: 800; color: #573926; }
     form input, form select {
       width: 100%;
-      background: #0d121f;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.14);
       border-radius: 8px;
       padding: 10px 12px;
-      color: #ffffff;
+      color: #231208;
       font-size: 0.88rem;
       box-sizing: border-box;
       outline: none;
       font-family: inherit;
     }
     form input:focus, form select:focus {
-      border-color: #fbbf24;
+      border-color: #8c4f2e;
     }
     .form-row { display: flex; gap: 12px; }
     .form-col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
@@ -344,23 +352,23 @@ import { RestaurantService } from '../../services/restaurant.service';
       margin-top: 10px;
     }
     .btn-modal-cancel {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #94a3b8;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      color: #7d5b45;
       padding: 10px 18px;
       border-radius: 10px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
     .btn-modal-confirm {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
       border: none;
       padding: 10px 22px;
       border-radius: 10px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      box-shadow: 0 4px 14px rgba(38, 20, 11, 0.35);
     }
   `]
 })

@@ -52,13 +52,12 @@ import { RouterModule } from '@angular/router';
       <!-- Bottom Tech Badge -->
       <div class="sidebar-bottom">
         <div class="tech-card">
-          <div class="card-glow"></div>
           <div class="badge-head">
             <span class="badge-tag">ANGULAR 18+</span>
             <span class="badge-pulse">● LIVE</span>
           </div>
-          <h4 class="card-title">Enterprise Architecture</h4>
-          <p class="card-desc">Standalone Components, RxJS BehaviorSubjects, HTTP DI, and pure TypeScript operations.</p>
+          <h4 class="card-title">Chocolate &amp; Ivory Edition</h4>
+          <p class="card-desc">Standalone Components, RxJS State Management, and TypeScript operations.</p>
         </div>
       </div>
     </aside>
@@ -66,21 +65,21 @@ import { RouterModule } from '@angular/router';
   styles: [`
     .sidebar {
       width: 270px;
-      background: rgba(13, 18, 31, 0.95);
-      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      background: #1f0f08;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding: 1.75rem 1rem 1.5rem;
       flex-shrink: 0;
       min-height: calc(100vh - 76px);
-      box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
+      box-shadow: 2px 0 16px rgba(31, 15, 8, 0.4);
     }
 
     .nav-section-title {
       font-size: 0.68rem;
       font-weight: 800;
-      color: #64748b;
+      color: #a37c63;
       letter-spacing: 0.12em;
       padding: 0 0.85rem 0.85rem;
     }
@@ -97,7 +96,7 @@ import { RouterModule } from '@angular/router';
       gap: 12px;
       padding: 12px 14px;
       border-radius: 12px;
-      color: #94a3b8;
+      color: #d6bfb0;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
@@ -118,15 +117,15 @@ import { RouterModule } from '@angular/router';
     }
 
     .nav-item:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.06);
       color: #ffffff;
       transform: translateX(3px);
     }
 
     .nav-item.active {
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0.04));
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      color: #fbbf24;
+      background: linear-gradient(90deg, rgba(217, 119, 6, 0.35), rgba(217, 119, 6, 0.1));
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fef3c7;
       font-weight: 700;
     }
 
@@ -148,22 +147,10 @@ import { RouterModule } from '@angular/router';
     }
 
     .tech-card {
-      position: relative;
-      background: linear-gradient(135deg, rgba(26, 36, 60, 0.6), rgba(15, 23, 42, 0.8));
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(245, 158, 11, 0.25);
       border-radius: 14px;
       padding: 1.15rem;
-      overflow: hidden;
-    }
-
-    .card-glow {
-      position: absolute;
-      top: -20px;
-      right: -20px;
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.2), transparent 70%);
-      pointer-events: none;
     }
 
     .badge-head {
@@ -177,15 +164,15 @@ import { RouterModule } from '@angular/router';
       font-size: 0.68rem;
       font-weight: 800;
       color: #fbbf24;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(245, 158, 11, 0.35);
       padding: 2px 6px;
       border-radius: 4px;
     }
 
     .badge-pulse {
       font-size: 0.65rem;
-      color: #10b981;
+      color: #34d399;
       font-weight: 700;
     }
 
@@ -193,13 +180,13 @@ import { RouterModule } from '@angular/router';
       margin: 0 0 4px;
       font-size: 0.85rem;
       font-weight: 700;
-      color: #f8fafc;
+      color: #fffbf7;
     }
 
     .card-desc {
       margin: 0;
       font-size: 0.72rem;
-      color: #94a3b8;
+      color: #bfa392;
       line-height: 1.45;
     }
   `]

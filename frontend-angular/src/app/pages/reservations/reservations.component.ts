@@ -13,7 +13,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
       <!-- Header -->
       <div class="page-header">
         <div>
-          <span class="sub-header">HOSPITALITY &amp; INTAKE</span>
+          <span class="sub-header">HOSPITALITY INTAKE • WHITE &amp; CHOCOLATE</span>
           <h2>Guest Dining Reservations</h2>
           <p>Bookings timeline, table allocations, party intake, and printable host run sheets.</p>
         </div>
@@ -27,7 +27,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Search & Status Filter Bar -->
+      <!-- Search & Status Filter Bar in White Card -->
       <div class="filter-card">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
@@ -51,7 +51,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Reservations Grid -->
+      <!-- Reservations Grid in White Cards -->
       <div class="res-grid" *ngIf="(reservations$ | async) as allRes">
         <div class="empty-box" *ngIf="filterReservations(allRes).length === 0">
           <div class="empty-icon">📅</div>
@@ -135,7 +135,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- New Reservation Modal -->
+      <!-- New Reservation Modal in White -->
       <div class="modal-backdrop" *ngIf="isModalOpen" (click)="isModalOpen = false">
         <div class="modal-card" (click)="$event.stopPropagation()">
           <div class="modal-head">
@@ -225,7 +225,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
       font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.12em;
-      color: #fbbf24;
+      color: #8c4f2e;
       display: block;
       margin-bottom: 4px;
     }
@@ -233,58 +233,60 @@ import { Reservation, Table } from '../../models/restaurant.model';
       margin: 0 0 4px;
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.85rem;
-      color: #ffffff;
+      color: #231208;
     }
     .page-header p {
       margin: 0;
-      color: #94a3b8;
+      color: #7d5b45;
       font-size: 0.92rem;
     }
 
     .header-actions { display: flex; gap: 12px; }
     .btn-csv {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: #38bdf8;
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.2);
+      color: #522d1a;
       padding: 10px 18px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(35, 18, 8, 0.04);
       transition: all 0.2s ease;
     }
     .btn-csv:hover {
-      background: rgba(56, 189, 248, 0.2);
+      background: #faf7f2;
+      border-color: #522d1a;
       transform: translateY(-1px);
     }
     .btn-new-res {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
       border: none;
       padding: 10px 20px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 4px 14px rgba(38, 20, 11, 0.3);
       transition: all 0.2s ease;
     }
     .btn-new-res:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+      box-shadow: 0 6px 20px rgba(38, 20, 11, 0.45);
     }
 
-    /* Search & Filter Card */
+    /* Search & Filter Card in White */
     .filter-card {
-      background: rgba(20, 27, 45, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 16px;
       padding: 12px 18px;
       display: flex;
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
     }
     .search-wrap {
       flex: 1;
@@ -301,24 +303,24 @@ import { Reservation, Table } from '../../models/restaurant.model';
     }
     .search-input {
       width: 100%;
-      background: rgba(13, 18, 31, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
       border-radius: 10px;
       padding: 10px 14px 10px 38px;
-      color: #ffffff;
+      color: #231208;
       font-size: 0.88rem;
       outline: none;
       transition: border-color 0.2s ease;
     }
     .search-input:focus {
-      border-color: #fbbf24;
+      border-color: #8c4f2e;
     }
 
     .status-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .status-btn {
-      background: rgba(13, 18, 31, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #94a3b8;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.1);
+      color: #634029;
       padding: 7px 14px;
       border-radius: 8px;
       font-size: 0.78rem;
@@ -326,15 +328,15 @@ import { Reservation, Table } from '../../models/restaurant.model';
       cursor: pointer;
       transition: all 0.15s ease;
     }
-    .status-btn:hover { color: #ffffff; }
+    .status-btn:hover { color: #231208; }
     .status-btn.active {
-      background: #f59e0b;
-      color: #0f172a;
-      border-color: #f59e0b;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+      background: #522d1a;
+      color: #ffffff;
+      border-color: #522d1a;
+      box-shadow: 0 2px 8px rgba(82, 45, 26, 0.35);
     }
 
-    /* Reservations Grid */
+    /* Reservations Grid in White Cards */
     .res-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -342,35 +344,35 @@ import { Reservation, Table } from '../../models/restaurant.model';
     }
     .empty-box {
       grid-column: 1 / -1;
-      background: rgba(20, 27, 45, 0.6);
-      border: 1px dashed rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px dashed rgba(74, 40, 22, 0.15);
       border-radius: 18px;
       padding: 3.5rem;
       text-align: center;
-      color: #94a3b8;
+      color: #7d5b45;
     }
     .empty-icon { font-size: 2.5rem; margin-bottom: 8px; }
 
     .res-card {
-      background: rgba(20, 27, 45, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 18px;
       padding: 1.35rem;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: 0 4px 18px rgba(35, 18, 8, 0.04);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .res-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 28px rgba(35, 18, 8, 0.1);
+      border-color: rgba(74, 40, 22, 0.25);
     }
-    .res-card.confirmed { border-left: 4px solid #38bdf8; }
-    .res-card.seated { border-left: 4px solid #10b981; }
-    .res-card.completed { border-left: 4px solid #64748b; opacity: 0.75; }
-    .res-card.cancelled { border-left: 4px solid #f43f5e; opacity: 0.6; }
+    .res-card.confirmed { border-left: 5px solid #0284c7; }
+    .res-card.seated { border-left: 5px solid #16a34a; }
+    .res-card.completed { border-left: 5px solid #78716c; opacity: 0.85; }
+    .res-card.cancelled { border-left: 5px solid #e11d48; opacity: 0.75; }
 
     .card-head {
       display: flex;
@@ -386,7 +388,7 @@ import { Reservation, Table } from '../../models/restaurant.model';
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #334155;
+      background: #522d1a;
       color: #ffffff;
       font-weight: 800;
       font-size: 1.1rem;
@@ -394,13 +396,13 @@ import { Reservation, Table } from '../../models/restaurant.model';
       align-items: center;
       justify-content: center;
     }
-    .guest-avatar.seated { background: linear-gradient(135deg, #10b981, #059669); }
-    .guest-avatar.confirmed { background: linear-gradient(135deg, #0284c7, #38bdf8); }
-    .guest-avatar.cancelled { background: #475569; }
+    .guest-avatar.seated { background: linear-gradient(135deg, #16a34a, #15803d); }
+    .guest-avatar.confirmed { background: linear-gradient(135deg, #0284c7, #0369a1); }
+    .guest-avatar.cancelled { background: #78716c; }
 
     .guest-details { display: flex; flex-direction: column; }
-    .res-id { font-size: 0.68rem; color: #64748b; font-family: monospace; }
-    .guest-details h4 { margin: 1px 0 0; color: #ffffff; font-size: 1.05rem; }
+    .res-id { font-size: 0.68rem; color: #8c6d58; font-family: monospace; }
+    .guest-details h4 { margin: 1px 0 0; color: #231208; font-size: 1.05rem; }
 
     .status-pill {
       font-size: 0.68rem;
@@ -409,23 +411,23 @@ import { Reservation, Table } from '../../models/restaurant.model';
       border-radius: 9999px;
       letter-spacing: 0.05em;
     }
-    .status-pill.confirmed { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .status-pill.seated { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .status-pill.completed { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
-    .status-pill.cancelled { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+    .status-pill.confirmed { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .status-pill.seated { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-pill.completed { background: #f5f5f4; color: #57534e; border: 1px solid #e7e5e4; }
+    .status-pill.cancelled { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
 
     .meta-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      background: rgba(13, 18, 31, 0.5);
+      background: #faf7f2;
       border-radius: 10px;
       padding: 8px 10px;
       gap: 6px;
     }
     .meta-chip { display: flex; flex-direction: column; gap: 2px; }
-    .chip-label { font-size: 0.65rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
-    .meta-chip strong { font-size: 0.82rem; color: #e2e8f0; }
-    .meta-chip strong.highlight { color: #fbbf24; }
+    .chip-label { font-size: 0.65rem; color: #8c6d58; font-weight: 800; text-transform: uppercase; }
+    .meta-chip strong { font-size: 0.82rem; color: #231208; }
+    .meta-chip strong.highlight { color: #8c4f2e; }
 
     .info-row {
       display: flex;
@@ -433,11 +435,11 @@ import { Reservation, Table } from '../../models/restaurant.model';
       align-items: center;
       font-size: 0.78rem;
     }
-    .phone-text { color: #94a3b8; }
+    .phone-text { color: #7d5b45; }
     .occasion-pill {
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.25);
-      color: #fbbf24;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #b45309;
       padding: 2px 8px;
       border-radius: 4px;
       font-weight: 600;
@@ -445,12 +447,12 @@ import { Reservation, Table } from '../../models/restaurant.model';
     }
 
     .notes-quote {
-      background: rgba(13, 18, 31, 0.4);
-      border-left: 3px solid #fb7185;
+      background: #fbf5ee;
+      border-left: 3px solid #8c4f2e;
       padding: 8px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
-      color: #cbd5e1;
+      color: #573926;
       font-style: italic;
     }
 
@@ -470,24 +472,24 @@ import { Reservation, Table } from '../../models/restaurant.model';
       transition: all 0.15s ease;
     }
     .btn-seat {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #16a34a, #15803d);
       color: white;
     }
     .btn-finish {
-      background: linear-gradient(135deg, #0284c7, #38bdf8);
-      color: #0f172a;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
     }
     .btn-cancel {
       background: transparent;
-      border: 1px solid rgba(244, 63, 94, 0.4);
-      color: #fb7185;
+      border: 1px solid rgba(225, 29, 72, 0.4);
+      color: #be123c;
     }
 
-    /* Modal Form */
+    /* Modal Form in White */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 12, 20, 0.82);
+      background: rgba(31, 15, 8, 0.65);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -496,14 +498,14 @@ import { Reservation, Table } from '../../models/restaurant.model';
       padding: 20px;
     }
     .modal-card {
-      background: #141b2d;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.15);
       border-radius: 20px;
-      padding: 1.75rem;
+      padding: 1.85rem;
       width: 500px;
       max-width: 100%;
-      color: #ffffff;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      color: #231208;
+      box-shadow: 0 20px 50px rgba(31, 15, 8, 0.3);
     }
     .modal-head {
       display: flex;
@@ -515,38 +517,46 @@ import { Reservation, Table } from '../../models/restaurant.model';
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.1em;
-      color: #fbbf24;
+      color: #8c4f2e;
     }
     .modal-head h3 {
       margin: 2px 0 0;
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
+      color: #231208;
     }
     .btn-close {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 1.4rem;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      color: #7d5b45;
+      font-size: 1.3rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .btn-close:hover { color: #231208; background: #f4ece1; }
 
     form { display: flex; flex-direction: column; gap: 12px; }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
-    form label { font-size: 0.78rem; font-weight: 700; color: #94a3b8; }
+    form label { font-size: 0.78rem; font-weight: 800; color: #573926; }
     form input, form select, form textarea {
       width: 100%;
-      background: #0d121f;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.14);
       border-radius: 8px;
       padding: 10px 12px;
-      color: #ffffff;
+      color: #231208;
       font-size: 0.88rem;
       box-sizing: border-box;
       outline: none;
       font-family: inherit;
     }
     form input:focus, form select:focus, form textarea:focus {
-      border-color: #fbbf24;
+      border-color: #8c4f2e;
     }
     .form-row { display: flex; gap: 12px; }
     .form-col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
@@ -558,23 +568,23 @@ import { Reservation, Table } from '../../models/restaurant.model';
       margin-top: 10px;
     }
     .btn-modal-cancel {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #94a3b8;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      color: #7d5b45;
       padding: 10px 18px;
       border-radius: 10px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
     .btn-modal-confirm {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #0f172a;
+      background: linear-gradient(135deg, #522d1a, #26140b);
+      color: #ffffff;
       border: none;
       padding: 10px 22px;
       border-radius: 10px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      box-shadow: 0 4px 14px rgba(38, 20, 11, 0.35);
     }
   `]
 })

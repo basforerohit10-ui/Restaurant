@@ -6,6 +6,15 @@ import { MenuService } from '../../services/menu.service';
 import { AuthService } from '../../services/auth.service';
 import { MenuItem, DishReview } from '../../models/restaurant.model';
 
+export interface MenuCoursePage {
+  id: 'starters' | 'mains' | 'desserts' | 'beverages' | 'all';
+  pageNumber: string;
+  courseTitle: string;
+  icon: string;
+  badge: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -15,9 +24,9 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       <!-- Luxury Culinary Welcome Banner -->
       <div class="menu-hero">
         <div class="hero-left">
-          <div class="hero-badge">🍽️ FOOD COURT COMPLETE CULINARY MENU • WHITE &amp; CHOCOLATE</div>
-          <h1>Restaurant Dishes &amp; Dining Menu List</h1>
-          <p>Hand-crafted appetizers, gourmet mains, artisanal desserts &amp; craft mocktails with guest ratings and transparent prices.</p>
+          <div class="hero-badge">🍽️ FOOD COURT DINING MENU • COURSE-BY-COURSE PAGES</div>
+          <h1>Fine Dining Restaurant Menu</h1>
+          <p>Explore our culinary selection page-by-page: Starters on Page 1, Main Course on Page 2, and Desserts on Page 3.</p>
         </div>
         <div class="hero-right">
           <a routerLink="/reservations" class="btn-reserve-table">
@@ -27,28 +36,49 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
         </div>
       </div>
 
-      <!-- Controls Bar: Category Pills + Search + View Mode Switcher -->
-      <div class="filter-bar">
-        <div class="category-pills">
+      <!-- ==================== COURSE PAGE NAVIGATION TABS (BOOK PAGES) ==================== -->
+      <div class="course-pages-bar">
+        <div class="pages-tabs">
           <button
-            *ngFor="let cat of categories"
-            class="cat-btn"
-            [class.active]="selectedCategory === cat.id"
-            (click)="selectedCategory = cat.id"
+            *ngFor="let page of coursePages; let i = index"
+            class="page-tab-btn"
+            [class.active]="currentPageIndex === i"
+            (click)="goToPage(i)"
           >
-            <span class="cat-icon">{{ cat.icon }}</span>
-            <span>{{ cat.label }}</span>
-            <span class="cat-count">({{ getCategoryCount(cat.id) }})</span>
+            <span class="tab-page-num">{{ page.pageNumber }}</span>
+            <div class="tab-main-info">
+              <span class="tab-icon">{{ page.icon }}</span>
+              <strong class="tab-title">{{ page.courseTitle }}</strong>
+              <span class="tab-count">({{ getCategoryCount(page.id) }} items)</span>
+            </div>
+            <span class="tab-active-indicator"></span>
           </button>
         </div>
+      </div>
 
-        <div class="toolbar-right">
+      <!-- Active Course Page Header Card -->
+      <div class="active-course-banner">
+        <div class="course-header-left">
+          <div class="course-meta-pill">
+            <span class="pill-page">{{ currentCourse.pageNumber | uppercase }}</span>
+            <span class="dot-sep">•</span>
+            <span class="pill-badge">{{ currentCourse.badge }}</span>
+          </div>
+          <h2 class="course-title">
+            <span class="course-icon">{{ currentCourse.icon }}</span>
+            <span>{{ currentCourse.courseTitle }}</span>
+          </h2>
+          <p class="course-desc">{{ currentCourse.description }}</p>
+        </div>
+
+        <div class="course-header-right">
+          <!-- Search box -->
           <div class="search-box">
             <span class="search-icon">🔍</span>
             <input
               type="text"
               [(ngModel)]="searchQuery"
-              placeholder="Search by dish name, sauce, spice..."
+              [placeholder]="'Search within ' + currentCourse.courseTitle + '...'"
               class="menu-search-input"
             />
           </div>
@@ -80,8 +110,9 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       <!-- Empty State If Search Yields Zero -->
       <div class="empty-state" *ngIf="filteredDishes.length === 0">
         <span class="empty-icon">🍲</span>
-        <h3>No dishes matched your filter</h3>
-        <p>Try searching with another keyword or select "All Dishes".</p>
+        <h3>No dishes found matching "{{ searchQuery }}"</h3>
+        <p>Try clearing your search or switch to another menu page.</p>
+        <button class="btn-clear-search" (click)="searchQuery = ''">Clear Search Filter</button>
       </div>
 
       <!-- ==================== 1. LIST VIEW (DEFAULT HOTEL RESTAURANT MENU LIST) ==================== -->
@@ -184,6 +215,57 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- ==================== BOTTOM HOTEL MENU BOOK PAGE TURNER ==================== -->
+      <div class="book-pagination-card">
+        <!-- Previous Page Button -->
+        <button
+          type="button"
+          class="page-nav-btn prev-btn"
+          [disabled]="currentPageIndex === 0"
+          (click)="prevPage()"
+        >
+          <span class="nav-arrow">←</span>
+          <div class="nav-label-box" *ngIf="currentPageIndex > 0">
+            <span class="nav-sub">PREVIOUS COURSE</span>
+            <strong class="nav-title">{{ coursePages[currentPageIndex - 1].courseTitle }}</strong>
+          </div>
+          <div class="nav-label-box" *ngIf="currentPageIndex === 0">
+            <strong class="nav-title">First Page (Starters)</strong>
+          </div>
+        </button>
+
+        <!-- Center Page Numbers / Stepper -->
+        <div class="page-stepper">
+          <button
+            *ngFor="let p of coursePages; let idx = index"
+            class="stepper-dot-btn"
+            [class.active]="currentPageIndex === idx"
+            (click)="goToPage(idx)"
+            [title]="p.courseTitle"
+          >
+            <span class="stepper-num">{{ idx + 1 }}</span>
+            <span class="stepper-label">{{ p.id === 'all' ? 'All' : p.id | titlecase }}</span>
+          </button>
+        </div>
+
+        <!-- Next Page Button -->
+        <button
+          type="button"
+          class="page-nav-btn next-btn"
+          [disabled]="currentPageIndex >= coursePages.length - 1"
+          (click)="nextPage()"
+        >
+          <div class="nav-label-box" *ngIf="currentPageIndex < coursePages.length - 1">
+            <span class="nav-sub">NEXT COURSE</span>
+            <strong class="nav-title">{{ coursePages[currentPageIndex + 1].courseTitle }}</strong>
+          </div>
+          <div class="nav-label-box" *ngIf="currentPageIndex >= coursePages.length - 1">
+            <strong class="nav-title">End of Menu</strong>
+          </div>
+          <span class="nav-arrow">→</span>
+        </button>
       </div>
 
       <!-- Modal: View Reviews -->
@@ -289,7 +371,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
     .menu-page {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 20px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
@@ -351,54 +433,130 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
     }
     .btn-arrow { font-weight: 800; }
 
-    /* Filter & Controls Toolbar */
-    .filter-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+    /* ==================== COURSE PAGE NAVIGATION BAR (BOOK TABS) ==================== */
+    .course-pages-bar {
       background: #ffffff;
-      border: 1px solid rgba(74, 40, 22, 0.12);
+      border: 1px solid rgba(74, 40, 22, 0.14);
       border-radius: 16px;
-      padding: 12px 18px;
-      box-shadow: 0 4px 14px rgba(74, 40, 22, 0.04);
+      padding: 8px;
+      box-shadow: 0 4px 16px rgba(74, 40, 22, 0.05);
     }
-    .category-pills {
-      display: flex;
+    .pages-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 8px;
-      flex-wrap: wrap;
     }
-    .cat-btn {
+    .page-tab-btn {
       display: flex;
-      align-items: center;
-      gap: 6px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
       background: #faf7f2;
       border: 1px solid rgba(74, 40, 22, 0.1);
-      color: #573926;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      border-radius: 12px;
+      padding: 10px 14px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      position: relative;
+      transition: all 0.2s ease;
+      text-align: left;
     }
-    .cat-btn:hover {
+    .page-tab-btn:hover {
       background: #f4ece1;
-      color: #231208;
+      border-color: rgba(74, 40, 22, 0.25);
     }
-    .cat-btn.active {
+    .page-tab-btn.active {
       background: #26140b;
       color: #ffffff;
       border-color: #26140b;
-      box-shadow: 0 2px 8px rgba(38, 20, 11, 0.25);
+      box-shadow: 0 4px 14px rgba(38, 20, 11, 0.25);
     }
-    .cat-count {
-      font-size: 0.74rem;
-      opacity: 0.8;
+    .tab-page-num {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #b45309;
+      letter-spacing: 0.08em;
+    }
+    .page-tab-btn.active .tab-page-num {
+      color: #fbbf24;
+    }
+    .tab-main-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tab-icon { font-size: 1.1rem; }
+    .tab-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #231208;
+    }
+    .page-tab-btn.active .tab-title {
+      color: #ffffff;
+    }
+    .tab-count {
+      font-size: 0.72rem;
+      color: #7d5b45;
+    }
+    .page-tab-btn.active .tab-count {
+      color: #dfcebf;
     }
 
-    .toolbar-right {
+    /* Active Course Banner */
+    .active-course-banner {
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      border-radius: 16px;
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 14px rgba(74, 40, 22, 0.04);
+    }
+    .course-header-left {
+      max-width: 600px;
+    }
+    .course-meta-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .pill-page {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #b45309;
+      background: #fef3c7;
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .dot-sep { color: #d6bfb0; font-size: 0.7rem; }
+    .pill-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #7d5b45;
+    }
+    .course-title {
+      margin: 0 0 4px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.6rem;
+      color: #231208;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .course-desc {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #634029;
+      line-height: 1.45;
+    }
+
+    .course-header-right {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -420,7 +578,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
     .menu-search-input {
       width: 100%;
       background: #faf7f2;
-      border: 1px solid rgba(74, 40, 22, 0.12);
+      border: 1px solid rgba(74, 40, 22, 0.14);
       border-radius: 10px;
       padding: 9px 12px 9px 36px;
       color: #231208;
@@ -458,7 +616,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       box-shadow: 0 2px 6px rgba(38, 20, 11, 0.2);
     }
 
-    /* ==================== 1. DISHES LIST VIEW STYLING ==================== */
+    /* ==================== 1. DISHES LIST VIEW ==================== */
     .dishes-list {
       display: flex;
       flex-direction: column;
@@ -469,7 +627,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       background: #ffffff;
       border: 1px solid rgba(74, 40, 22, 0.12);
       border-radius: 16px;
-      padding: 1rem 1.4rem;
+      padding: 1.1rem 1.5rem;
       display: flex;
       align-items: center;
       gap: 18px;
@@ -625,10 +783,7 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
       font-size: 0.74rem;
       color: #8c4f2e;
     }
-    .cat-tag {
-      font-weight: 800;
-      letter-spacing: 0.05em;
-    }
+    .cat-tag { font-weight: 800; letter-spacing: 0.05em; }
     .sep { color: #d6bfb0; }
     .review-quick-stat {
       cursor: pointer;
@@ -838,16 +993,139 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
     }
     .btn-add-review:hover { background: #fef3c7; }
 
+    /* ==================== 3. BOOK PAGINATION CARD (PAGE TURNER) ==================== */
+    .book-pagination-card {
+      background: #ffffff;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      border-radius: 18px;
+      padding: 1.25rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 18px rgba(74, 40, 22, 0.06);
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .page-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.14);
+      border-radius: 12px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #231208;
+    }
+    .page-nav-btn:hover:not(:disabled) {
+      background: #26140b;
+      color: #ffffff;
+      border-color: #26140b;
+      box-shadow: 0 4px 12px rgba(38, 20, 11, 0.25);
+    }
+    .page-nav-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f4ece1;
+    }
+    .nav-arrow {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #b45309;
+    }
+    .page-nav-btn:hover:not(:disabled) .nav-arrow {
+      color: #fbbf24;
+    }
+    .nav-label-box {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .next-btn .nav-label-box {
+      text-align: right;
+    }
+    .nav-sub {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #8c4f2e;
+    }
+    .page-nav-btn:hover:not(:disabled) .nav-sub {
+      color: #fbbf24;
+    }
+    .nav-title {
+      font-size: 0.88rem;
+    }
+
+    .page-stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stepper-dot-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.12);
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #634029;
+      transition: all 0.15s ease;
+    }
+    .stepper-dot-btn:hover {
+      background: #f4ece1;
+      color: #231208;
+    }
+    .stepper-dot-btn.active {
+      background: #26140b;
+      color: #ffffff;
+      border-color: #26140b;
+      box-shadow: 0 2px 8px rgba(38, 20, 11, 0.25);
+    }
+    .stepper-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(217, 119, 6, 0.2);
+      color: #b45309;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .stepper-dot-btn.active .stepper-num {
+      background: #fbbf24;
+      color: #26140b;
+    }
+
     /* Empty state */
     .empty-state {
       text-align: center;
       background: #ffffff;
       border: 1px dashed rgba(74, 40, 22, 0.2);
       border-radius: 18px;
-      padding: 3.5rem 2rem;
+      padding: 3rem 2rem;
       color: #7d5b45;
     }
     .empty-icon { font-size: 2.8rem; margin-bottom: 8px; }
+    .btn-clear-search {
+      margin-top: 10px;
+      background: #faf7f2;
+      border: 1px solid rgba(74, 40, 22, 0.2);
+      color: #522d1a;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
 
     /* Modals */
     .modal-backdrop {
@@ -1062,6 +1340,13 @@ import { MenuItem, DishReview } from '../../models/restaurant.model';
         padding-top: 10px;
         margin-top: 6px;
       }
+      .book-pagination-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .page-stepper {
+        justify-content: center;
+      }
     }
   `]
 })
@@ -1070,15 +1355,50 @@ export class MenuComponent {
   private authService = inject(AuthService);
 
   searchQuery = '';
-  selectedCategory = 'all';
   viewMode: 'list' | 'grid' = 'list'; // Default to List format as requested!
+  currentPageIndex = 0; // Default to Page 1: Starters!
 
-  categories = [
-    { id: 'all', label: 'All Dishes', icon: '🍽️' },
-    { id: 'starters', label: 'Starters', icon: '🥑' },
-    { id: 'mains', label: 'Main Course', icon: '🍛' },
-    { id: 'desserts', label: 'Desserts', icon: '🍫' },
-    { id: 'beverages', label: 'Beverages', icon: '🍹' }
+  coursePages: MenuCoursePage[] = [
+    {
+      id: 'starters',
+      pageNumber: 'Page 1 of 4',
+      courseTitle: 'Starters & Appetizers',
+      icon: '🥑',
+      badge: 'Course 01',
+      description: 'Awaken your palate with artisanal clay oven kebabs, crisp avocado tartlets, and flame-roasted skewers.'
+    },
+    {
+      id: 'mains',
+      pageNumber: 'Page 2 of 4',
+      courseTitle: 'Main Course & Signature Dishes',
+      icon: '🍛',
+      badge: 'Course 02',
+      description: 'Slow-simmered rich curries, Awadhi dum lamb biryani, 18-hour Dal Bukhara & tandoori bread baskets.'
+    },
+    {
+      id: 'desserts',
+      pageNumber: 'Page 3 of 4',
+      courseTitle: 'Desserts & Confectionery',
+      icon: '🍫',
+      badge: 'Course 03',
+      description: 'Royal Belgian dark chocolate molten lava, saffron shahi tukda, baked cheesecake & matka kulfi.'
+    },
+    {
+      id: 'beverages',
+      pageNumber: 'Page 4 of 4',
+      courseTitle: 'Craft Mocktails & Beverages',
+      icon: '🍹',
+      badge: 'Course 04',
+      description: 'Applewood smoked berry tonics, Alphonso basil fizz, single-estate Darjeeling teas & cold brews.'
+    },
+    {
+      id: 'all',
+      pageNumber: 'Full Menu',
+      courseTitle: 'All Courses Combined',
+      icon: '📖',
+      badge: 'Complete Tasting',
+      description: 'The complete hotel restaurant gastronomic collection across all four courses.'
+    }
   ];
 
   activeReviewDish: MenuItem | null = null;
@@ -1088,6 +1408,29 @@ export class MenuComponent {
   newRating = 5;
   newComment = '';
 
+  get currentCourse(): MenuCoursePage {
+    return this.coursePages[this.currentPageIndex] || this.coursePages[0];
+  }
+
+  goToPage(index: number): void {
+    if (index >= 0 && index < this.coursePages.length) {
+      this.currentPageIndex = index;
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPageIndex < this.coursePages.length - 1) {
+      this.goToPage(this.currentPageIndex + 1);
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPageIndex > 0) {
+      this.goToPage(this.currentPageIndex - 1);
+    }
+  }
+
   getCategoryCount(categoryId: string): number {
     const dishes = this.menuService.getDishes();
     if (categoryId === 'all') return dishes.length;
@@ -1096,8 +1439,11 @@ export class MenuComponent {
 
   get filteredDishes(): MenuItem[] {
     const dishes = this.menuService.getDishes();
+    const activeCatId = this.currentCourse.id;
+
     return dishes.filter(dish => {
-      const matchCat = this.selectedCategory === 'all' || dish.category === this.selectedCategory;
+      // If user is searching text, search across the active page, or if 'all', across all
+      const matchCat = activeCatId === 'all' || dish.category === activeCatId;
       const q = this.searchQuery.toLowerCase().trim();
       const matchSearch =
         !q ||

@@ -5,7 +5,6 @@ import { TablesComponent } from './pages/tables/tables.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import { WaitlistComponent } from './pages/waitlist/waitlist.component';
 import { GuestsComponent } from './pages/guests/guests.component';
-import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { authGuard, loginGuard, staffOnlyGuard } from './guards/auth.guard';
 
@@ -43,11 +42,6 @@ export const routes: Routes = [
   {
     path: 'guests',
     component: GuestsComponent,
-    canActivate: [authGuard, staffOnlyGuard]
-  },
-  {
-    path: 'analytics',
-    component: AnalyticsComponent,
     canActivate: [authGuard, staffOnlyGuard]
   },
   {

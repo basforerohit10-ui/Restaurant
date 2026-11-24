@@ -154,7 +154,7 @@
       "capacity": 4,
       "shape": "square",
       "status": "reserved",
-      "currentReservationId": "RES-006",
+      "currentReservationId": "RES-1101",
       "x": 75,
       "y": 25
     },
@@ -303,6 +303,36 @@
     }
   ],
   "reservations": [
+    {
+      "id": "RES-1101",
+      "guestName": "rohit",
+      "phone": "7439450337",
+      "email": "",
+      "partySize": 3,
+      "tableId": "T-204",
+      "date": "2026-11-24",
+      "time": "19:00",
+      "occasion": "Birthday Celebration",
+      "specialRequests": "",
+      "status": "confirmed",
+      "source": "Web App",
+      "createdAt": "2026-11-24T13:27:51.101Z"
+    },
+    {
+      "id": "RES-5521",
+      "guestName": "rohit",
+      "phone": "743",
+      "email": "",
+      "partySize": 2,
+      "tableId": null,
+      "date": "2026-11-24",
+      "time": "19:00",
+      "occasion": "Casual Dining",
+      "specialRequests": "",
+      "status": "confirmed",
+      "source": "Web App",
+      "createdAt": "2026-11-24T13:27:05.523Z"
+    },
     {
       "id": "RES-001",
       "guestName": "Eleanor Vance",

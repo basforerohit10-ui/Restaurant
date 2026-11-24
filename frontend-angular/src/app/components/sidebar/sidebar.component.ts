@@ -79,12 +79,6 @@ import { AuthService } from '../../services/auth.service';
               <span class="nav-label">Guest CRM &amp; VIPs</span>
               <span class="active-indicator"></span>
             </a>
-
-            <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
-              <span class="nav-icon">⚡</span>
-              <span class="nav-label">Array Studio &amp; TS</span>
-              <span class="active-indicator"></span>
-            </a>
           </ng-container>
         </nav>
       </div>
